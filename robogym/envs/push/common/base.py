@@ -55,6 +55,7 @@ from robogym.wrappers.util import (
     DiscretizeActionWrapper,
     SmoothActionWrapper,
 )
+from IPython import embed
 
 logger = logging.getLogger(__name__)
 
@@ -454,9 +455,10 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
             utils.reset_mocap_welds(self.sim)
             self.sim.forward()
             tcp_pos = self.mujoco_simulation.mj_sim.data.get_body_xpos(
-                "s_model_tool0"
+                "ur5_wrist_3_link"
             )
-            tcp_quat = self.sim.data.get_body_xquat("s_model_tool0")
+            tcp_quat = self.sim.data.get_body_xquat("ur5_wrist_3_link")
+            # embed()
             self.mujoco_simulation.mj_sim.data.set_mocap_pos("ur5_mocap", tcp_pos)
             self.mujoco_simulation.mj_sim.data.set_mocap_quat("ur5_mocap", tcp_quat)
 
@@ -914,7 +916,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
 
         self.mujoco_simulation.forward()
 
-        self._randomize_robot_initial_position()
+        # self._randomize_robot_initial_position()
 
         # Update `max_timesteps_per_goal` directly in the tracker. Do NOT update
         # `self.constants.max_timesteps_per_goal` here since it won't propagate correctly

@@ -1,6 +1,6 @@
 <mujocoinclude>
     <equality>
-        <weld body1="ur5_mocap" body2="s_model_tool0" solimp="0.9 0.95 0.001" solref="0.02 1"></weld>
+        <weld body1="ur5_mocap" body2="ur5_wrist_3_link" solimp="0.9 0.95 0.001" solref="0.02 1"></weld>
     </equality>
 
     <asset>
@@ -9,7 +9,7 @@
         <material name="floor_mat" specular="0" shininess="0.5" reflectance="0" rgba="0.2 0.2 0.2 1"></material>
         <material name="table_mat" specular="0" shininess="0.5" reflectance="0" rgba="0.93 0.93 0.93 1"></material>
         <material name="block_mat" specular="0" shininess="0.5" reflectance="0" rgba="1 1 0 1"></material>
-        
+
         <mesh name="ur5_mount_binary_v3" file="robot/ur5/ur5_mount_binary_v3.stl" scale="0.001 0.001 0.001" />
         <mesh name="base" file="robot/ur5/base.stl" />
         <mesh name="shoulder" file="robot/ur5/shoulder.stl" />

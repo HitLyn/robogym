@@ -10,7 +10,7 @@ from robogym.envs.push.simulation.blocks import (
     BlockRearrangeSimParameters,
 )
 from robogym.robot_env import build_nested_attr
-
+from IPython import embed
 
 @attr.s(auto_attribs=True)
 class BlockRearrangeEnvParameters(RearrangeEnvParameters):

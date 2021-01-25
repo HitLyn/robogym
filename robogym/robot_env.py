@@ -951,6 +951,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
                 else:
                     super(MyEnv, self).render(mode=mode) # just raise an exception
         """
+        # embed()
         if mode == "human":
             return self.mujoco_simulation.mujoco_viewer.render()
         elif mode == "rgb_array":
@@ -1123,6 +1124,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         robot = cls.build_robot(
             mujoco_simulation=mujoco_simulation, physical=constants.physical
         )
+        # embed()
         env = cls(
             parameters=parameters,
             constants=constants,
@@ -1133,6 +1135,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
             randomization=randomization,
             starting_seed=starting_seed,
         )
+        # env.render()
 
         if apply_wrappers:
             env = env.apply_wrappers(**wrapper_params)

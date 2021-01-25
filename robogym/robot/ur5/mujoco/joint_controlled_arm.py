@@ -13,7 +13,7 @@ from robogym.robot.ur5.mujoco.simulation.base import ArmSimulationInterface
 from robogym.utils import rotation
 from IPython import embed
 FINGERTIP_SITE_NAME = "ur_centerplate"
-TCP_BODY_NAME = "s_model_tool0"
+TCP_BODY_NAME = "ur5_wrist_3_link"
 
 
 class MujocoObservation(RobotObservation):

@@ -80,7 +80,7 @@ class FreeDOFTcpArm(Arm):
 
         self.solver = MocapSolver(
             simulation=self.simulation,
-            body_name="s_model_tool0",
+            body_name="ur5_wrist_3_link",
             robot_prefix=self.robot_prefix,
             quat_dof_dims=self.DOF_DIMS,
             alignment_axis=self.ALIGN_AXIS,
