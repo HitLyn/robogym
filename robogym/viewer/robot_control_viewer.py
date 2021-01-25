@@ -5,7 +5,7 @@ import numpy as np
 from gym.spaces import MultiDiscrete
 from mujoco_py import const
 
-from robogym.robot.composite.controllers.ur_gripper_arm import (
+from robogym.robot.ur5_composite.controllers.ur_gripper_arm import (
     Direction,
     URGripperArmController,
 )
