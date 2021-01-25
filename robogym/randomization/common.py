@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Dict, Generic, List, Optional, Tuple, TypeVar
 
 import numpy as np
-
+from IPython import embed
 VType = TypeVar("VType", int, float)
 
 
@@ -108,6 +108,7 @@ class Randomizer(abc.ABC, Generic[TType]):
 
     def randomize(self, target: TType, random_state: np.random.RandomState) -> TType:
         if self._enabled:
+            # embed();exit()
             return self._randomize(target, random_state)
         else:
             return target

@@ -52,7 +52,7 @@ class RobotControlParameters:
     max_position_change: Optional[float] = None
 
     tcp_solver_mode: TcpSolverMode = attr.ib(
-        default=TcpSolverMode.MOCAP_IK,
+        default=TcpSolverMode.MOCAP,
         validator=attr.validators.in_(TcpSolverMode),
         converter=TcpSolverMode,
     )
@@ -74,7 +74,7 @@ class RobotControlParameters:
     def is_joint_actuated(self):
         return (
             self.control_mode is ControlMode.JOINT
-            or self.tcp_solver_mode is TcpSolverMode.MOCAP_IK
+            # or self.tcp_solver_mode is TcpSolverMode.MOCAP_IK
         )
 
     def is_tcp_controlled(self):

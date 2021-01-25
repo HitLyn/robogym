@@ -29,7 +29,7 @@ from robogym.randomization.parameters import (
     IntRandomizerParameter,
 )
 from robogym.randomization.sim import SimulationRandomizer
-
+from IPython import embed
 MYPY = False
 
 if MYPY:
@@ -258,5 +258,6 @@ class EnvRandomization(RandomizerCollection[Randomizer], Generic[PType]):
         """
         Reset randomizer state. Will be called during environment reset.
         """
+        # embed()
         for randomizer in self.get_randomizers():
             randomizer.reset()

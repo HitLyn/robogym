@@ -1,0 +1,32 @@
+<mujocoinclude>
+    <default>
+        <default class="ur_jntrange_full">
+            <include file="jointrange_defaults.xml"/>
+            <default class="ur5_shoulder_pan_joint">
+                <joint damping="300" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+
+            <default class="ur5_shoulder_lift_joint">
+                <joint damping="300" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+
+            <default class="ur5_elbow_joint">
+                <joint damping="100" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+
+            <default class="ur5_wrist_1_joint">
+                <joint damping="10" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+
+            <default class="ur5_wrist_2_joint">
+                <joint damping="10" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+        </default>
+        <default class="ur_jntrange_wrist">
+            <include file="jointrange_wrist.xml"/>
+            <default class="ur5_wrist_3_joint">
+                <joint damping="10" armature="100" margin="0.01" frictionloss="10"/>
+            </default>
+        </default>
+    </default>
+</mujocoinclude>

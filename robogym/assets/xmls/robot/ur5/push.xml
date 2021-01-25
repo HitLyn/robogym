@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco>
+    <compiler angle="radian" meshdir="../stls/ur5"></compiler>
+    <option timestep="0.002">
+        <flag warmstart="enable"></flag>
+    </option>
+
+    <include file="shared.xml"></include>
+
+    <worldbody>
+        <include file="tams_ur5.xml"></include>
+
+        <!-- <body name="object0" pos="0.89 0.74 0.78">
+            <joint name="object0:joint" type="free" damping="0.01"></joint>
+            <geom size="0.05 0.05 0.05" type="box" condim="3" name="object0" mass="2"></geom>
+            <site name="object0" pos="0 0 0" size="0.02 0.02 0.02" rgba="1 0 0 1" type="sphere"></site>
+        </body> -->
+
+        <light directional="true" ambient="0.2 0.2 0.2" diffuse="0.8 0.8 0.8" specular="0.3 0.3 0.3" castshadow="false" pos="0 0 4" dir="0 0 -1" name="light0"></light>
+    </worldbody>
+
+    <actuator></actuator>
+</mujoco>

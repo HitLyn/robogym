@@ -30,7 +30,7 @@ from robogym.robot.robot_interface import Robot
 from robogym.robot_exception import RobotException
 from robogym.utils.env_utils import gym_space_from_arrays
 from robogym.utils.multi_goal_tracker import MultiGoalTracker
-
+from IPython import embed
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
@@ -778,6 +778,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
 
         # Randomize simulation. Because sim is recreated in self._reset(),
         # simulation_randomizer.randomize should be called after the _reset.
+        # embed()
         self.randomization.simulation_randomizer.randomize(
             self.mujoco_simulation.mj_sim, self._random_state
         )

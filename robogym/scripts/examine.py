@@ -4,6 +4,7 @@ import logging
 import click
 
 from robogym.envs.rearrange.common.base import RearrangeEnv
+from robogym.envs.push.common.base import PushEnv
 from robogym.utils.env_utils import load_env
 from robogym.utils.parse_arguments import parse_arguments
 from robogym.viewer.env_viewer import EnvViewer
@@ -39,7 +40,7 @@ def main(argv, teleoperate):
     )
     if teleoperate:
         teleop_compatible = (
-            isinstance(env.unwrapped, RearrangeEnv)
+            (isinstance(env.unwrapped, RearrangeEnv) or isinstance(env.unwrapped, PushEnv))
             and env.parameters.robot_control_params.is_tcp_controlled()
         )
         assert (

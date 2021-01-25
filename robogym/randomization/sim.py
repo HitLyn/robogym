@@ -13,6 +13,7 @@ from robogym.randomization.parameters import (
     RandomizerParameter,
 )
 from robogym.utils.rotation import random_unity2
+from IPython import embed
 
 
 def has_prefixes(string, prefixes):
@@ -352,6 +353,8 @@ class GenericSimRandomizer(SimulationRandomizer):
         super().__init__(name)
 
         self._field_name = field_name
+        # if self._field_name == 'dof_armature':
+            # embed()
         self._is_opt = field_name in OPT_FIELDS
         self._coef = coef
         self._positive_only = positive_only
@@ -372,7 +375,7 @@ class GenericSimRandomizer(SimulationRandomizer):
 
         self._initial_value = copy.deepcopy(self.get_params())
 
-        self.multiplicative_mode_sanity_check(self._zero_threshold)
+        # self.multiplicative_mode_sanity_check(self._zero_threshold)
 
     def _prepare_randomizer_params(
         self,
@@ -434,6 +437,7 @@ class GenericSimRandomizer(SimulationRandomizer):
         if self._apply_mode in multiplicative_apply_modes:
             params = self._initial_value
             zeros = np.isclose(params, 0.0).mean()
+            # embed()
 
             assert zeros <= zero_threshold, (
                 f"Mode is multiplicative on field {self._field_name}, but too many "
@@ -443,6 +447,7 @@ class GenericSimRandomizer(SimulationRandomizer):
             )
 
     def identify_fields(self, geom_prefix, body_prefix, dof_jnt_prefix, jnt_prefix):
+        # embed()
         if geom_prefix is not None:
             assert self._field_name.startswith("geom_")
             geom_names = [
@@ -487,7 +492,7 @@ class GenericSimRandomizer(SimulationRandomizer):
             ]
         else:
             ids = None
-
+        # embed()
         if ids is not None:
             ids = np.array(sorted(ids))
             assert len(ids) > 0, "no IDs matched for {}".format(self._field_name)
