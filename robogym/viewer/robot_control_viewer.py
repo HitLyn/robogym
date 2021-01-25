@@ -55,10 +55,10 @@ class RobotControlViewer(EnvViewer):
             self.action = self._discretize(self.controller.move_z(Direction.NEG))
         elif key == glfw.KEY_Z:
             self.action = self._discretize(self.controller.move_z(Direction.POS))
-        elif key == glfw.KEY_V:
-            self.action = self._discretize(self.controller.move_gripper(Direction.NEG))
-        elif key == glfw.KEY_C:
-            self.action = self._discretize(self.controller.move_gripper(Direction.POS))
+        # elif key == glfw.KEY_V:
+        #     self.action = self._discretize(self.controller.move_gripper(Direction.NEG))
+        # elif key == glfw.KEY_C:
+        #     self.action = self._discretize(self.controller.move_gripper(Direction.POS))
         elif key == glfw.KEY_UP:
             self.action = self._discretize(self.controller.move_x(Direction.NEG))
         elif key == glfw.KEY_DOWN:
@@ -116,7 +116,7 @@ class RobotControlViewer(EnvViewer):
             "[up]/[down]/[left]/[right] arrow",
         )
         self.add_overlay(const.GRID_TOPRIGHT, "Go up/down", "[Z]/[X]")
-        self.add_overlay(const.GRID_TOPRIGHT, "Open/Close gripper", "[V]/[C]")
+        # self.add_overlay(const.GRID_TOPRIGHT, "Open/Close gripper", "[V]/[C]")
         self.add_overlay(const.GRID_TOPRIGHT, "Rotate wrist CW/CCW", "[Q]/[W]")
         self.add_overlay(const.GRID_TOPRIGHT, "Tilt Wrist", "[Y]/[U]")
         self.add_overlay(const.GRID_TOPRIGHT, "Slow down/Speed up", "[-]/[=]")
@@ -139,18 +139,18 @@ class RobotControlViewer(EnvViewer):
                 self.env.unwrapped.parameters.robot_control_params.tcp_solver_mode.value
             ),
         )
-        gripper_force = self.controller.get_gripper_actuator_force()
-        if gripper_force is not None:
-            self.add_overlay(
-                const.GRID_BOTTOMRIGHT, "Gripper Force", "%.2f" % gripper_force
-            )
-        # - - - - > re-grasp
-        regrasp = self.controller.get_gripper_regrasp_status()
-        regrasp_str = "Unknown"
-        if regrasp is not None:
-            regrasp_str = "ON!" if regrasp else "Off"
-        self.add_overlay(const.GRID_BOTTOMRIGHT, "Gripper Auto Re-grasp", regrasp_str)
-        # < - - - - re-grasp
+        # gripper_force = self.controller.get_gripper_actuator_force()
+        # if gripper_force is not None:
+        #     self.add_overlay(
+        #         const.GRID_BOTTOMRIGHT, "Gripper Force", "%.2f" % gripper_force
+        #     )
+        # # - - - - > re-grasp
+        # regrasp = self.controller.get_gripper_regrasp_status()
+        # regrasp_str = "Unknown"
+        # if regrasp is not None:
+        #     regrasp_str = "ON!" if regrasp else "Off"
+        # self.add_overlay(const.GRID_BOTTOMRIGHT, "Gripper Auto Re-grasp", regrasp_str)
+        # # < - - - - re-grasp
         self.add_overlay(
             const.GRID_BOTTOMRIGHT,
             "Wrist Angle",

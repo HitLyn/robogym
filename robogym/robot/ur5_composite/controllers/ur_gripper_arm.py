@@ -5,6 +5,9 @@ from typing import Optional
 import numpy as np
 
 from robogym.robot.ur5_composite.ur_gripper_arm import URGripperCompositeRobot
+from robogym.robot.ur5.mujoco.ideal_joint_controlled_tcp_arm import (
+    IdealJointControlledTcpArm,
+)
 from robogym.robot.gripper.mujoco.mujoco_robotiq_gripper import MujocoRobotiqGripper
 from robogym.robot.ur5.mujoco.free_dof_tcp_arm import FreeRollYawTcpArm
 from robogym.robot_env import RobotEnv
@@ -34,7 +37,7 @@ class URGripperArmController:
 
     def __init__(self, env: RobotEnv):
         self._speeds = np.array([0.3, 0.5, 0.3])
-        assert isinstance(env.robot, URGripperCompositeRobot)
+        assert isinstance(env.robot, IdealJointControlledTcpArm)
         self.env = env
 
     @property
@@ -124,7 +127,7 @@ class URGripperArmController:
         """
         ctrl = self.zero_control()
 
-        if not isinstance(self.robot.robots[0].controller_arm, FreeRollYawTcpArm):
+        if not isinstance(self.robot.controller_arm, FreeRollYawTcpArm):
             logging.warning(
                 "This robot doesn't support tilting gripper, skip this action."
             )
@@ -142,32 +145,32 @@ class URGripperArmController:
         ctrl[-2] = self.wrist_speed * direction.value
         return ctrl
 
-    def get_gripper_actuator_force(self) -> Optional[float]:
-        """
-        Get actuator force for the gripper.
-        """
-        gripper = self.robot.robots[1]
-        if isinstance(gripper, MujocoRobotiqGripper):
-            return gripper.simulation.mj_sim.data.actuator_force[gripper.actuator_id]
-        else:
-            return None
-
-    def get_gripper_regrasp_status(self) -> Optional[bool]:
-        """Returns True if re-grasp feature is ON for the gripper, False if it's OFF, and None if the gripper does
-        not report the status of the re-grasp feature, or it does not have that feature.
-
-        :return: True if re-grasp feature is ON for the gripper, False if it's OFF, and None if the gripper does
-        not report the status of the re-grasp feature, or it does not have that feature.
-        """
-        status: Optional[bool]
-
-        gripper = self.robot.robots[1]
-
-        if not hasattr(gripper, "regrasp_enabled"):
-            return None
-        elif gripper.regrasp_enabled:
-            is_currently_regrasping = gripper.regrasp_helper.regrasp_command is not None
-            status = is_currently_regrasping
-        else:
-            status = None
-        return status
+    # def get_gripper_actuator_force(self) -> Optional[float]:
+    #     """
+    #     Get actuator force for the gripper.
+    #     """
+    #     gripper = self.robot.robots[1]
+    #     if isinstance(gripper, MujocoRobotiqGripper):
+    #         return gripper.simulation.mj_sim.data.actuator_force[gripper.actuator_id]
+    #     else:
+    #         return None
+    #
+    # def get_gripper_regrasp_status(self) -> Optional[bool]:
+    #     """Returns True if re-grasp feature is ON for the gripper, False if it's OFF, and None if the gripper does
+    #     not report the status of the re-grasp feature, or it does not have that feature.
+    #
+    #     :return: True if re-grasp feature is ON for the gripper, False if it's OFF, and None if the gripper does
+    #     not report the status of the re-grasp feature, or it does not have that feature.
+    #     """
+    #     status: Optional[bool]
+    #
+    #     gripper = self.robot.robots[1]
+    #
+    #     if not hasattr(gripper, "regrasp_enabled"):
+    #         return None
+    #     elif gripper.regrasp_enabled:
+    #         is_currently_regrasping = gripper.regrasp_helper.regrasp_command is not None
+    #         status = is_currently_regrasping
+    #     else:
+    #         status = None
+    #     return status
