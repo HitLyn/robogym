@@ -22,6 +22,7 @@
         <mesh name="r200" file="robot/ur5/r200.STL" />
         <mesh name="robotiq_fts150" file="robot/ur5/robotiq_fts150.stl" />
         <mesh name="palm" file="robot/ur5/palm.STL" />
+        <mesh name="pusher" file="robot/ur5/pusher.stl" />
         <mesh name="link_0" file="robot/ur5/link_0.STL" />
         <mesh name="link_1" file="robot/ur5/link_1.STL" />
         <mesh name="link_2" file="robot/ur5/link_2.STL" />

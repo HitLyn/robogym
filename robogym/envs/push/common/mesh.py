@@ -5,7 +5,7 @@ import attr
 import numpy as np
 
 from robogym.envs.push.common.base import (
-    RearrangeEnv,
+    PushEnv,
     RearrangeEnvConstants,
     RearrangeEnvParameters,
 )
@@ -45,7 +45,7 @@ PType = TypeVar("PType", bound=MeshRearrangeEnvParameters)
 SType = TypeVar("SType", bound=MeshRearrangeSim)
 
 
-class MeshRearrangeEnv(RearrangeEnv[PType, CType, SType], abc.ABC):
+class MeshRearrangeEnv(PushEnv[PType, CType, SType], abc.ABC):
     def _sample_group_attributes(self, num_groups: int):
         attrs_dict = super()._sample_group_attributes(num_groups)
         attrs_dict["mesh_files"] = self._sample_object_meshes(num_groups)
