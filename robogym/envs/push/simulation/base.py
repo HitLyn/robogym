@@ -905,7 +905,7 @@ class RearrangeSimulationInterface(
 
     @classmethod
     def compute_table_dimension(cls, table_pos, table_size):
-        table_height = table_size[-1] + table_pos[-1]
+        table_height = table_size[-1] + table_pos[-1] + 0.39
         return table_pos, table_size, table_height
 
     @classmethod

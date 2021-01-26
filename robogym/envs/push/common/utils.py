@@ -749,7 +749,7 @@ def place_objects_in_grid(
     table_pos, table_size, table_height = table_dimensions
 
     def _get_global_placement(placement: np.ndarray):
-        return placement + [offset_x, offset_y, 0.0] - table_size + table_pos
+        return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
     # 1. Determine the number of rows and columns of the grid, based on the largest object width
     # and height.
