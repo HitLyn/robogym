@@ -685,7 +685,7 @@ def _place_objects_trial(
     table_pos, table_size, table_height = table_dimensions
 
     def _get_global_placement(placement: np.ndarray):
-        return placement + [offset_x, offset_y, 0.0] - table_size + table_pos
+        return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
     # place the objects one by one, resampling if a collision with previous objects happens
     n_objects = object_bounding_boxes.shape[0]

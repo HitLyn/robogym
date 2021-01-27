@@ -122,7 +122,7 @@ def randomize_quaternion_full(
 @attr.s(auto_attribs=True)
 class GoalArgs:
     # If true randomize goal orientation.
-    randomize_goal_rot: bool = False
+    randomize_goal_rot: bool = True
 
     # Type of rotation distance calculation for goal.
     rot_dist_type: str = attr.ib(
@@ -434,27 +434,27 @@ class ObjectStateGoal(GoalGenerator):
     def _sample_next_goal_positions(
         self, random_state: RandomState
     ) -> Tuple[np.ndarray, bool]:
-        placement, is_valid = place_objects_in_grid(
+        # placement, is_valid = place_objects_in_grid(
+        #     self.mujoco_simulation.get_object_bounding_boxes(),
+        #     self.mujoco_simulation.get_table_dimensions(),
+        #     self.mujoco_simulation.get_placement_area(),
+        #     random_state=random_state,
+        #     max_num_trials=self.mujoco_simulation.max_placement_retry,
+        # )
+        #
+        # if not is_valid:
+            # Fall back to random placement, which works better for envs with more irregular
+            # objects (e.g. ycb-8 with no mesh normalization).
+        return place_objects_with_no_constraint(
             self.mujoco_simulation.get_object_bounding_boxes(),
             self.mujoco_simulation.get_table_dimensions(),
             self.mujoco_simulation.get_placement_area(),
+            max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
+            max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
             random_state=random_state,
-            max_num_trials=self.mujoco_simulation.max_placement_retry,
         )
-
-        if not is_valid:
-            # Fall back to random placement, which works better for envs with more irregular
-            # objects (e.g. ycb-8 with no mesh normalization).
-            return place_objects_with_no_constraint(
-                self.mujoco_simulation.get_object_bounding_boxes(),
-                self.mujoco_simulation.get_table_dimensions(),
-                self.mujoco_simulation.get_placement_area(),
-                max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
-                max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
-                random_state=random_state,
-            )
-        else:
-            return placement, is_valid
+        # else:
+        #     return placement, is_valid
 
     def _sample_next_goal_orientations(self, random_state: RandomState) -> np.ndarray:
         """ Sample goal orientation in quaternion """

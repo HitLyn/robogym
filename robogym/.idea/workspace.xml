@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93827a3b-cf33-40bd-8b2d-6349dbd1a3e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/xmls/robot/ur5/tams_ur5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/assets/xmls/robot/ur5/tams_ur5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/envs/push/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/push/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/envs/push/simulation/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/push/simulation/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/push/goals/object_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/push/goals/object_state.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/envs/push/ycb.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            <state relative-caret-position="186">
+              <caret line="53" column="54" lean-forward="true" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -30,7 +29,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/envs/push/common/mesh.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
+            <state relative-caret-position="770">
               <caret line="51" selection-start-line="51" selection-end-line="51" />
             </state>
           </provider>
@@ -39,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/envs/push/common/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2973">
-              <caret line="739" column="40" lean-forward="true" selection-start-line="739" selection-start-column="40" selection-end-line="739" selection-end-column="40" />
+            <state relative-caret-position="15004">
+              <caret line="739" column="40" selection-start-line="739" selection-start-column="40" selection-end-line="739" selection-end-column="40" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -51,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/envs/push/simulation/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="903" selection-start-line="903" selection-end-line="903" />
+            <state relative-caret-position="190">
+              <caret line="495" selection-start-line="495" selection-end-line="495" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -60,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/envs/push/goals/object_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="363" selection-start-line="363" selection-end-line="363" />
+            <state relative-caret-position="219">
+              <caret line="375" column="70" selection-start-line="375" selection-start-column="70" selection-end-line="375" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -72,8 +71,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/envs/push/common/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="816" column="39" lean-forward="true" selection-start-line="816" selection-start-column="39" selection-end-line="816" selection-end-column="39" />
+            <state relative-caret-position="-1606">
+              <caret line="718" column="4" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -84,8 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="343" column="35" lean-forward="true" selection-start-line="343" selection-start-column="35" selection-end-line="343" selection-end-column="35" />
+            <state relative-caret-position="190">
+              <caret line="545" column="60" lean-forward="true" selection-start-line="545" selection-start-column="60" selection-end-line="545" selection-end-column="60" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -96,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/goal/goal_generator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-389">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="68">
+              <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -118,10 +117,12 @@
       <find>_mocap</find>
       <find>mocap</find>
       <find>_generate_object_placements</find>
-      <find>place_objects_in_grid</find>
       <find>table_dimensions</find>
       <find>placement_valid</find>
       <find>goal</find>
+      <find>placement_area</find>
+      <find>get_proposal</find>
+      <find>place_objects_in_grid</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,12 +142,14 @@
         <option value="$PROJECT_DIR$/envs/push/simulation/base.py" />
         <option value="$PROJECT_DIR$/envs/push/common/base.py" />
         <option value="$PROJECT_DIR$/envs/push/common/utils.py" />
+        <option value="$PROJECT_DIR$/envs/push/goals/object_state.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1738" />
-    <option name="width" value="1647" />
+    <option name="x" value="1987" />
+    <option name="y" value="27" />
+    <option name="width" value="1637" />
     <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -157,6 +160,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -191,7 +195,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -290,7 +293,7 @@
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.38300222" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.44481236" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.39981008" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -304,9 +307,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/envs/push/ycb.py</url>
-          <line>60</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/robot_env.py</url>
+          <line>426</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -454,10 +457,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_env.py">
+    <entry file="file://$PROJECT_DIR$/envs/push/ycb.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="343" column="35" lean-forward="true" selection-start-line="343" selection-start-column="35" selection-end-line="343" selection-end-column="35" />
+        <state relative-caret-position="186">
+          <caret line="53" column="54" lean-forward="true" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/envs/push/common/mesh.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/envs/push/common/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15004">
+          <caret line="739" column="40" selection-start-line="739" selection-start-column="40" selection-end-line="739" selection-end-column="40" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -466,62 +486,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/goal/goal_generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-389">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state relative-caret-position="68">
+          <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/envs/push/common/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="816" column="39" lean-forward="true" selection-start-line="816" selection-start-column="39" selection-end-line="816" selection-end-column="39" />
+        <state relative-caret-position="-1606">
+          <caret line="718" column="4" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/envs/push/goals/object_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="363" selection-start-line="363" selection-end-line="363" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/envs/push/simulation/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="903" selection-start-line="903" selection-end-line="903" />
+        <state relative-caret-position="190">
+          <caret line="495" selection-start-line="495" selection-end-line="495" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/envs/push/common/base.py">
+    <entry file="file://$PROJECT_DIR$/robot_env.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2973">
-          <caret line="739" column="40" lean-forward="true" selection-start-line="739" selection-start-column="40" selection-end-line="739" selection-end-column="40" />
+        <state relative-caret-position="190">
+          <caret line="545" column="60" lean-forward="true" selection-start-line="545" selection-start-column="60" selection-end-line="545" selection-end-column="60" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/envs/push/common/mesh.py">
+    <entry file="file://$PROJECT_DIR$/envs/push/goals/object_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/envs/push/ycb.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="219">
+          <caret line="375" column="70" selection-start-line="375" selection-start-column="70" selection-end-line="375" selection-end-column="70" />
         </state>
       </provider>
     </entry>

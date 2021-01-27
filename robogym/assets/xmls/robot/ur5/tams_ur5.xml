@@ -90,7 +90,7 @@
                                                                         <body name="s_model_finger_1_link_1" pos="0.02 0 0">
                                                                             <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
                                                                             <!-- <joint name="s_model_finger_1_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.0495 1.2218" /> -->
-                                                                            <joint name="s_model_finger_1_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.8 0.801" />
+                                                                            <joint name="s_model_finger_1_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="1.98 1.981" />
                                                                             <geom name="s_model_finger_1_link_1" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_1" />
                                                                             <body name="s_model_finger_1_link_2" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081">
                                                                                 <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
@@ -100,7 +100,7 @@
                                                                                 <body name="s_model_finger_1_link_3" pos="0.039 0 0">
                                                                                     <inertial pos="0 0 0" quat="0.614353 0.390886 -0.585309 0.35664" mass="0.05" diaginertia="0.00163315 0.00136097 0.000726883" />
                                                                                     <!-- <joint name="s_model_finger_1_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-1.2217 -0.0523" /> -->
-                                                                                    <joint name="s_model_finger_1_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.641 -0.64" />
+                                                                                    <joint name="s_model_finger_1_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.341 -0.34" />
                                                                                     <geom name="s_model_finger_1_link_3" quat="0.96639 0 0 0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_3" />
                                                                                 </body>
                                                                             </body>
@@ -114,7 +114,7 @@
                                                                         <body name="s_model_finger_2_link_1" pos="0.02 0 0">
                                                                             <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
                                                                             <!-- <joint name="s_model_finger_2_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.0495 1.2218" /> -->
-                                                                            <joint name="s_model_finger_2_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.8 0.801" />
+                                                                            <joint name="s_model_finger_2_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="1.98 1.981" />
                                                                             <geom name="s_model_finger_2_link_1" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_1" />
                                                                             <body name="s_model_finger_2_link_2" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081">
                                                                                 <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
@@ -124,7 +124,7 @@
                                                                                 <body name="s_model_finger_2_link_3" pos="0.039 0 0">
                                                                                     <inertial pos="0 0 0" quat="0.614353 0.390886 -0.585309 0.35664" mass="0.05" diaginertia="0.00163315 0.00136097 0.000726883" />
                                                                                     <!-- <joint name="s_model_finger_2_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-1.2217 -0.0523" /> -->
-                                                                                    <joint name="s_model_finger_2_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.641 -0.64" />
+                                                                                    <joint name="s_model_finger_2_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.341 -0.34" />
                                                                                     <geom name="s_model_finger_2_link_3" quat="0.96639 0 0 0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_3" />
                                                                                 </body>
                                                                             </body>
@@ -136,23 +136,23 @@
                                                                         <body name="s_model_finger_middle_link_1" pos="0.02 0 0">
                                                                             <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
                                                                             <!-- <joint name="s_model_finger_middle_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.0495 1.2218" /> -->
-                                                                            <joint name="s_model_finger_middle_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0.8 0.801" />
+                                                                            <joint name="s_model_finger_middle_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="2.92 2.921" />
                                                                             <geom name="s_model_finger_middle_link_1" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_1" />
                                                                             <body name="s_model_finger_middle_link_2" pos="0.05 -0.028 0" quat="0.96639 0 0 -0.257081">
                                                                                 <inertial pos="0 0 0" quat="0.478816 0.503501 0.521199 0.495554" mass="0.15" diaginertia="0.00567167 0.00567167 0.00567167" />
                                                                                 <!-- <joint name="s_model_finger_middle_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.5708" /> -->
-                                                                                <joint name="s_model_finger_middle_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0 0.001" />
+                                                                                <joint name="s_model_finger_middle_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0.32 0.321" />
                                                                                 <geom name="s_model_finger_middle_link_2" pos="0.039 0 0.0075" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_2" />
                                                                                 <body name="s_model_finger_middle_link_3" pos="0.039 0 0">
                                                                                     <inertial pos="0 0 0" quat="0.614353 0.390886 -0.585309 0.35664" mass="0.05" diaginertia="0.00163315 0.00136097 0.000726883" />
                                                                                     <!-- <joint name="s_model_finger_middle_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-1.2217 -0.0523" /> -->
-                                                                                    <joint name="s_model_finger_middle_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.061 -0.06" />
+                                                                                    <joint name="s_model_finger_middle_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="-0.121 -0.12" />
                                                                                     <geom name="s_model_finger_middle_link_3" quat="0.96639 0 0 0.257081" type="mesh" rgba="0.2 0.2 0.2 1" mesh="link_3" />
                                                                                 </body>
                                                                             </body>
                                                                         </body>
                                                                     </body>
-                                                                    <body name="pusher" pos="0.0 0.05 0.0">
+                                                                    <body name="pusher" pos="0.0 0.057 0.0">
                                                                         <inertial pos="0. 0. 0." mass="0" diaginertia="0 0 0" />
                                                                         <geom name="pusher" type="mesh" rgba="0.7 0.7 0.7 1" mesh="pusher"/>
                                                                     </body>
@@ -214,7 +214,7 @@
             <inertial pos="0 0 0" mass="2000" diaginertia="1 1 1" />
             <geom size="0.135 0.1 1.5" type="box" rgba="0.6 0.6 0.6 1" />
         </body>
-        <body name="table" pos="0.89 0.74 0">
+        <body name="table" pos="0.70 0.74 0">
             <inertial pos="0 0 0.39" mass="10" diaginertia="1 1 1" />
             <geom name="table" size="0.4 0.5 0.39" pos="0 0 0.39" type="box" rgba="0.87 0.72 0.53 0.2" />
             <body name="table_top" pos="0 0 0.78">
