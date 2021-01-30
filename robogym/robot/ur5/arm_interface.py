@@ -24,7 +24,7 @@ ACTUATORS = [
 
 # A good initial setting for Arm joint angles for a tabletop experiment performed with
 # the UR arm
-TABLETOP_EXPERIMENT_INITIAL_POS = np.array([1.52, -0.54, 0.89, 1.20, 1.60, 0.0])
+TABLETOP_EXPERIMENT_INITIAL_POS = np.array([1.52, -0.54, 0.89, 1.20, 1.58, 0.0])
 
 ACTUATOR_CTRLRANGE_LOWER_BOUND = np.array(
     [ACTUATOR_CTRLRANGE[key][0] for key in ACTUATORS]
