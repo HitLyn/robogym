@@ -122,8 +122,8 @@ class ClipRewardWrapper(gym.RewardWrapper):
         self._clip = clip
 
     def reward(self, reward):
-        clipped_reward = np.clip(reward, -self._clip, self._clip)
-        return clipped_reward
+        # clipped_reward = np.clip(reward, -self._clip, self._clip)
+        return reward
 
     def compute_relative_goals(self, *args, **kwargs):
         self.env.compute_relative_goals(*args, **kwargs)

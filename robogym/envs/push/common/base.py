@@ -986,13 +986,13 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
             self._set_action(action)
 
     def apply_wrappers(self, **wrapper_params):
-        env = SmoothActionWrapper(self, alpha=0.3)
-        env = ClipRewardWrapper(env)
-        env = DiscretizeActionWrapper(
-            env,
-            n_action_bins=self.constants.n_action_bins,
-            bin_spacing=self.constants.action_spacing,
-        )
+        # env = SmoothActionWrapper(self, alpha=0.3)
+        env = ClipRewardWrapper(self)
+        # # env = DiscretizeActionWrapper(
+        # #     env,
+        # #     n_action_bins=self.constants.n_action_bins,
+        # #     bin_spacing=self.constants.action_spacing,
+        # # )
 
         return env
 
