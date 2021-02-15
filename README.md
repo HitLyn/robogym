@@ -207,3 +207,8 @@ See the document on ["Interface for Environment Randomization"](docs/env_param_i
 We provide a set of tools to help create a customized rearrange environment via teleoperation.
 
 See the document on ["Build New Rearrange Environments"](docs/build_new_rearrange_envs.md) for more details.
+
+## UR5 Env:
+using teleoperate to control ur5 please comment:
+robogym/envs/push/common/base.py line 991-995
+
