@@ -93,7 +93,13 @@ class YcbRearrangeEnv(
 make_env = YcbRearrangeEnv.build
 
 if __name__ == '__main__':
+    from mujoco_py import GlfwContext
+    import matplotlib.pyplot as plt
+    GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
     env.reset()
     # env.render()
+    array = env.render(mode="rgb_array")
+    plt.imshow(array)
+    plt.show()
     env.step([0.5, 0.5, 0, 0, 0])

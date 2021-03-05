@@ -955,7 +955,8 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         if mode == "human":
             return self.mujoco_simulation.mujoco_viewer.render()
         elif mode == "rgb_array":
-            return self.mujoco_simulation.render(width=width, height=height)
+            # return self.mujoco_simulation.render(width=width, height=height)
+            return self.mujoco_simulation.render
         else:
             raise ValueError("Unsupported mode %s" % mode)
 

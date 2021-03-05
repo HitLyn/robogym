@@ -234,9 +234,9 @@ class SimulationInterface:
             if depth=True)
         """
         return self.sim.render(
-            width=width,
-            height=height,
-            camera_name=camera_name,
+            width=512,
+            height=512,
+            camera_name="phys_checks_cam",
             depth=depth,
             mode=mode,
             device_id=device_id,
