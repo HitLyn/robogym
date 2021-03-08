@@ -604,7 +604,9 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
 
     def _apply_object_colors(self):
         obj_groups = self.mujoco_simulation.object_groups
-        obj_colors = [g.color.copy() for g in obj_groups for _ in range(g.count)]
+        # obj_colors = [g.color.copy() for g in obj_groups for _ in range(g.count)]
+        obj_colors = [np.array([1., 0, 0, 1.])]
+        print(obj_colors)
         self.mujoco_simulation.set_object_colors(obj_colors)
 
     def _apply_object_size_scales(self):
@@ -985,14 +987,15 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         else:
             self._set_action(action)
 
-    def apply_wrappers(self, **wrapper_params):
+    def apply_wrappers(self, teleoperate, **wrapper_params):
         # env = SmoothActionWrapper(self, alpha=0.3)
         env = ClipRewardWrapper(self)
-        # env = DiscretizeActionWrapper(
-        #     env,
-        #     n_action_bins=self.constants.n_action_bins,
-        #     bin_spacing=self.constants.action_spacing,
-        # )
+        if teleoperate:
+            env = DiscretizeActionWrapper(
+                env,
+                n_action_bins=self.constants.n_action_bins,
+                bin_spacing=self.constants.action_spacing,
+            )
 
         return env
 

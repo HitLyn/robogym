@@ -208,7 +208,4 @@ We provide a set of tools to help create a customized rearrange environment via 
 
 See the document on ["Build New Rearrange Environments"](docs/build_new_rearrange_envs.md) for more details.
 
-## UR5 Env:
-using teleoperate to control ur5 please comment:
-robogym/envs/push/common/base.py line 991-995
 

@@ -139,6 +139,7 @@ def load_env(
     make_env_finder=MakeEnvFinder,
     arg_filter=None,
     return_args_remaining=False,
+    teleoperate=False,
     **kwargs,
 ):
     args_remaining = {}
@@ -158,7 +159,7 @@ def load_env(
         kwargs, args_remaining = arg_filter(make_env, kwargs)
 
     make_env = partial(make_env, **kwargs)
-    env = make_env()
+    env = make_env(teleoperate=teleoperate)
 
     if return_args_remaining:
         return env, args_remaining

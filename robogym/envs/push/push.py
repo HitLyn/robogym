@@ -11,7 +11,8 @@ from robogym.envs.push.common.mesh import (
 )
 from robogym.envs.push.common.utils import find_meshes_by_dirname
 from robogym.envs.push.simulation.mesh import MeshRearrangeSim
-
+from matplotlib import pyplot as plt
+from datetime import datetime
 logger = logging.getLogger(__name__)
 
 
@@ -52,6 +53,10 @@ class YcbRearrangeEnv(
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
+        push_candidates = ["004_sugar_box", "011_banana", "013_apple", "024_bowl", "030_fork", "032_knife", "037_scissors", "031_spoon", "035_power_drill",
+                           "044_flat_screwdriver", "048_hammer", "072-a_toy_airplane", "077_rubiks_cube", "065-a_cups", "073-a_lego_duplo", "065-f_cups", "033_spatula",
+                           "029_plate", "025_mug", "027_skillet"]
+        self.parameters.mesh_names = push_candidates
 
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -93,13 +98,24 @@ class YcbRearrangeEnv(
 make_env = YcbRearrangeEnv.build
 
 if __name__ == '__main__':
+    # in /push/simulation/base.py: set_object_colors() to change target object color
     from mujoco_py import GlfwContext
+    import numpy as np
     import matplotlib.pyplot as plt
     GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
-    env.reset()
-    # env.render()
-    array = env.render(mode="rgb_array")
-    plt.imshow(array)
-    plt.show()
-    env.step([0.5, 0.5, 0, 0, 0])
+    for n in range(300):
+        env.reset()
+        for j in range(6):
+            env.step([-0.5, 0, 0, 0, 0])
+        for i in range(10):
+            name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
+            # now = datetime.now()
+            # current_time = now.strftime("%H:%M:%S")
+            # name = path + current_time
+            array = env.render(mode="rgb_array")
+            plt.imsave(name, array, format='png')
+            # plt.show()
+            x = np.random.uniform(-1, 1)
+            y = np.random.uniform(-1, 1)
+            env.step([x, y, 0, 0, 0])

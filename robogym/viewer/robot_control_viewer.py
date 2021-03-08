@@ -11,6 +11,8 @@ from robogym.robot.ur5_composite.controllers.ur_gripper_arm import (
 )
 from robogym.utils.misc import pretty
 from robogym.viewer.env_viewer import EnvViewer
+from matplotlib import pyplot as plt
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +79,14 @@ class RobotControlViewer(EnvViewer):
             self.action = self._discretize(self.controller.tilt_gripper(Direction.NEG))
         else:
             super().key_callback(window, key, scancode, glfw.PRESS, mods)
+        # path = "/homeL/cong/Dataset/push_sim/"
+        # # from mujoco_py import GlfwContext
+        # # GlfwContext(offscreen=True)  # Create a window to init GLFW.
+        # array = self.env.render(mode="rgb_array")
+        # now = datetime.now()
+        # current_time = now.strftime("%H:%M:%S")
+        # name = path + current_time
+        # plt.imsave(name, array, format='png')
 
     def _release_key_callback(self, window, key, scancode, mods):
         self.action = self.zero_action(self.env.action_space)

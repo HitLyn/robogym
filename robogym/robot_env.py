@@ -1089,6 +1089,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         wrapper_params=None,
         starting_seed=None,
         apply_wrappers=True,
+        teleoperate=False,
     ):
         """
         Construct a dactyl environment together with a set of common wrappers.
@@ -1139,7 +1140,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         # env.render()
 
         if apply_wrappers:
-            env = env.apply_wrappers(**wrapper_params)
+            env = env.apply_wrappers(teleoperate, **wrapper_params)
 
         return env
 

@@ -20,7 +20,12 @@ logger = logging.getLogger(__name__)
     is_flag=True,
     help="If true, loads environment in teleop mode. Teleop mode is only supported for rearrange environments with TCP robot control modes",
 )
-def main(argv, teleoperate):
+@click.option(
+    "--image",
+    is_flag=True,
+    help="If true, save image during teleop",
+)
+def main(argv, teleoperate, image):
     """
     examine.py is used to display environments.
     \b
@@ -33,7 +38,7 @@ def main(argv, teleoperate):
 
     assert len(names) == 1, "Expected a single argument for the environment."
     env_name = names[0]
-    env, args_remaining = load_env(env_name, return_args_remaining=True, **kwargs)
+    env, args_remaining = load_env(env_name, return_args_remaining=True, teleoperate=teleoperate, **kwargs)
 
     assert env is not None, print(
         '"{}" doesn\'t seem to be a valid environment'.format(env_name)

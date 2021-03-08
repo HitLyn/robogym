@@ -8,6 +8,8 @@ from gym.spaces import Box, MultiDiscrete
 from mujoco_py import MjViewer, const, ignore_mujoco_warnings
 
 from robogym.utils.misc import pretty
+from matplotlib import pyplot as plt
+from datetime import datetime
 
 
 class EnvViewer(MjViewer):
@@ -100,6 +102,7 @@ class EnvViewer(MjViewer):
 
         super().key_callback(window, key, scancode, action, mods)
 
+
     def render(self):
         super().render()
 
@@ -119,7 +122,11 @@ class EnvViewer(MjViewer):
         before updating the simulation. """
         pass
 
-    def run(self, once=False):
+    def run(self, once=False, image=False):
+        # path = "/homeL/cong/Dataset/push_sim_control/"
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        last_time = current_time
         while True:
             self.process_events()
             self.update_sim(self.env.unwrapped.sim)
@@ -131,8 +138,35 @@ class EnvViewer(MjViewer):
 
             self.add_overlay(const.GRID_BOTTOMRIGHT, "done", str(done))
             self.render()
-
             self.update_aux_display()
+
+            # path = "/homeL/cong/Dataset/push_sim_control/"
+            # # img = self._read_pixels_as_in_window()
+            # # print(img.shape)
+            # now = datetime.now()
+            # current_time = now.strftime("%H:%M:%S")
+            # name = path + current_time
+            # if current_time > last_time:
+            #     img = self._read_pixels_as_in_window()
+            #     plt.imsave(name, img, format='png')
+            # last_time = current_time
+            # if image:
+            #     from mujoco_py import GlfwContext
+            #     GlfwContext(offscreen=True)  # Create a window to init GLFW.
+            #     # array = self.env.render(mode="rgb_array")
+            #     img = self.env.mujoco_simulation.render
+            #     print(img.shape)
+            #     now = datetime.now()
+            #     current_time = now.strftime("%H:%M:%S")
+            #     name = path + current_time
+            #     plt.imsave(name, img, format='png')
+            # #     # plt.imshow(array)
+            # #     # plt.show()
+
+
+
+
+            # self.update_aux_display()
 
             if once:
                 return

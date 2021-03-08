@@ -14,7 +14,7 @@
 <!--        <body name="ur5_vision_cam_front" pos="2.5933 0.9625 2.643">-->
 
             <camera quat="-0.6367045 -0.252152 -0.3069759 -0.6609029" fovy="28.58257" name="vision_cam_front" pos="0.0 0.0 0.0"></camera>
-            <camera quat="-0.581 -0.38899999999999996 -0.4050000000000001 -0.588" fovy="45" name="phys_checks_cam" pos="0.0008854866 0.0207299 0.0007930994"></camera>
+            <camera quat="-0.581 -0.38899999999999996 -0.4050000000000001 -0.588" fovy="45" name="phys_checks_cam" pos="0.0008854866 0.0007299 0.0007930994"></camera>
 <!--            <camera quat="1 -0. -0. -0." fovy="25" name="phys_checks_cam" pos="0.0008854866 0.0207299 0.0007930994"></camera>-->
         </body>
 
