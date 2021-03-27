@@ -104,12 +104,12 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
-    for n in range(300):
+    for n in range(1000):
         env.reset()
         for j in range(6):
             env.step([-0.5, 0, 0, 0, 0])
         for i in range(10):
-            name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
+            name = '/homeL/cong/HitLyn/Visual-Pushing/images/red_original/' + "{:0>5d}.png".format(10*n + i)
             # now = datetime.now()
             # current_time = now.strftime("%H:%M:%S")
             # name = path + current_time

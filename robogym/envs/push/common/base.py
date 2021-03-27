@@ -606,7 +606,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         obj_groups = self.mujoco_simulation.object_groups
         # obj_colors = [g.color.copy() for g in obj_groups for _ in range(g.count)]
         obj_colors = [np.array([1., 0, 0, 1.])]
-        print(obj_colors)
+        # print(obj_colors)
         self.mujoco_simulation.set_object_colors(obj_colors)
 
     def _apply_object_size_scales(self):
