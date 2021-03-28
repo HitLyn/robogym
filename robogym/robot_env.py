@@ -841,7 +841,12 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         self.t += 1
 
         obs, reward, done, info = self.get_observation(robot_exception=robot_exception)
-        obs, reward, done, info = self.step_finalize(obs, reward, done, info)
+        # embed()
+        reward = np.float(info["goal_achieved"])
+        # print("goal achieved:", info["goal_achieved"])
+        # print("done:", done)
+        # print("step:", self.t)
+        # obs, reward, done, info = self.step_finalize(obs, reward, done, info)
         return obs, reward, done, info
 
     def get_info_finalize(self, info: dict) -> dict:

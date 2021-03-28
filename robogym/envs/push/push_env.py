@@ -1,7 +1,7 @@
 import logging
 import os
 from typing import Dict, List
-
+import numpy as np
 import attr
 
 from robogym.envs.push.common.mesh import (
@@ -13,6 +13,7 @@ from robogym.envs.push.common.utils import find_meshes_by_dirname
 from robogym.envs.push.simulation.mesh import MeshRearrangeSim
 from matplotlib import pyplot as plt
 from datetime import datetime
+from IPython import embed
 logger = logging.getLogger(__name__)
 
 
@@ -94,6 +95,16 @@ class YcbRearrangeEnv(
         simulation_info.update(self._cached_object_names)
 
         return simulation_info
+
+    def step(self, action):
+        obs, reward, done, info = super().step(action)
+        # embed()
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["is_success"] = info["goal_achieved"]
+
+        return obs, reward, done, info
 
 
 make_env = YcbRearrangeEnv.build
