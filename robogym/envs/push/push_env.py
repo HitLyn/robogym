@@ -3,7 +3,7 @@ import os
 from typing import Dict, List
 import numpy as np
 import attr
-
+from termcolor import cprint
 from robogym.envs.push.common.mesh import (
     MeshRearrangeEnv,
     MeshRearrangeEnvConstants,
@@ -55,9 +55,8 @@ class YcbRearrangeEnv(
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["004_sugar_box", "011_banana", "013_apple", "024_bowl", "030_fork", "032_knife", "037_scissors", "031_spoon", "035_power_drill",
-                           "044_flat_screwdriver", "048_hammer", "072-a_toy_airplane", "077_rubiks_cube", "065-a_cups", "073-a_lego_duplo", "065-f_cups", "033_spatula",
-                           "029_plate", "025_mug", "027_skillet"]
+        push_candidates = ["035_power_drill",
+                           ]
         self.parameters.mesh_names = push_candidates
 
     def _recreate_sim(self) -> None:
@@ -97,15 +96,29 @@ class YcbRearrangeEnv(
         return simulation_info
 
     def step(self, action):
-        obs, reward, done, info = super().step(action)
+        full_action = np.zeros(5)
+        full_action[:2] = action[:]
+        obs, reward, done, info = super().step(full_action)
         # embed()
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
         obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
         obs["is_success"] = info["goal_achieved"]
 
-        return obs, reward, done, info
+        # cprint("step in env", "red")
 
+        return obs, reward, done, info
+    def reset(self):
+        # cprint("env reset", "red")
+        obs = super().reset()
+        for i in range(10):
+            self.step([-0.5, 0])
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["is_success"] = False
+
+        return obs
 
 make_env = YcbRearrangeEnv.build
 
