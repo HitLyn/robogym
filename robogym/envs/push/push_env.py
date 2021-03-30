@@ -1,9 +1,9 @@
 import logging
 import os
 from typing import Dict, List
-
+import numpy as np
 import attr
-
+from termcolor import cprint
 from robogym.envs.push.common.mesh import (
     MeshRearrangeEnv,
     MeshRearrangeEnvConstants,
@@ -13,6 +13,7 @@ from robogym.envs.push.common.utils import find_meshes_by_dirname
 from robogym.envs.push.simulation.mesh import MeshRearrangeSim
 from matplotlib import pyplot as plt
 from datetime import datetime
+from IPython import embed
 logger = logging.getLogger(__name__)
 
 
@@ -54,9 +55,8 @@ class YcbRearrangeEnv(
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["004_sugar_box", "011_banana", "013_apple", "024_bowl", "030_fork", "032_knife", "037_scissors", "031_spoon", "035_power_drill",
-                           "044_flat_screwdriver", "048_hammer", "072-a_toy_airplane", "077_rubiks_cube", "065-a_cups", "073-a_lego_duplo", "065-f_cups", "033_spatula",
-                           "029_plate", "025_mug", "027_skillet"]
+        push_candidates = ["035_power_drill",
+                           ]
         self.parameters.mesh_names = push_candidates
 
     def _recreate_sim(self) -> None:
@@ -95,6 +95,30 @@ class YcbRearrangeEnv(
 
         return simulation_info
 
+    def step(self, action):
+        full_action = np.zeros(5)
+        full_action[:2] = action[:]
+        obs, reward, done, info = super().step(full_action)
+        # embed()
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["is_success"] = info["goal_achieved"]
+
+        # cprint("step in env", "red")
+
+        return obs, reward, done, info
+    def reset(self):
+        # cprint("env reset", "red")
+        obs = super().reset()
+        for i in range(10):
+            self.step([-0.5, 0])
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["is_success"] = False
+
+        return obs
 
 make_env = YcbRearrangeEnv.build
 
@@ -105,12 +129,12 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
-    for n in range(1000):
+    for n in range(300):
         env.reset()
         for j in range(6):
             env.step([-0.5, 0, 0, 0, 0])
         for i in range(10):
-            name = '/homeL/cong/HitLyn/Visual-Pushing/images/red_original/' + "{:0>5d}.png".format(10*n + i)
+            name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
             # now = datetime.now()
             # current_time = now.strftime("%H:%M:%S")
             # name = path + current_time
