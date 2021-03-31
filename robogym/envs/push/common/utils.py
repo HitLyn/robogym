@@ -777,9 +777,9 @@ def place_objects_in_grid(
 
     if n_cells < n_objects:
         # Cannot find a valid placement via this method; give up.
-        logging.warning(
-            f"Unable to fit {n_objects} objects into placement area with {n_cells} cells"
-        )
+        # logging.warning(
+        #     f"Unable to fit {n_objects} objects into placement area with {n_cells} cells"
+        # )
         return np.zeros(shape=(n_objects, 3)), False
 
     for trial_i in range(max_num_trials):

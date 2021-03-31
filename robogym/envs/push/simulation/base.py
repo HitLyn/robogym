@@ -1000,11 +1000,11 @@ class RearrangeSimulationInterface(
         )
         assert used_table_portion <= 1.0
 
-        place_size_x = 0.5 * table_size_x * used_table_portion
-        place_size_y = 0.38 * table_size_y * used_table_portion
+        place_size_x = 0.2 * table_size_x * used_table_portion
+        place_size_y = 0.2 * table_size_y * used_table_portion
         place_size_z = 0.26
         offset_x = 0.5 * table_size_x - place_size_x / 2.0
-        offset_y = 0.44 * table_size_y - place_size_y / 2.0
+        offset_y = 0.44 * table_size_y - place_size_y / 2.0 + 0.1
         offset_z = 2 * table_size[2]
 
         return PlacementArea(
