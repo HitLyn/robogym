@@ -899,22 +899,23 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         )
 
     def _reset(self):
-        if self.constants.use_fixed_seed:
-            self.seed(self.seed())
+        # if self.constants.use_fixed_seed:
+        #     self.seed(self.seed())
 
         # This needs to happen before sim creation because sim creation depends
         # on the mujoco args generated from material randomization.
         self._randomize_object_groups()
+        # self.robot.reset()
         self._recreate_sim()
-        self._apply_object_size_scales()
+        # self._apply_object_size_scales()
         self._apply_object_colors()
 
         self._randomize_object_initial_states()
         # self._randomize_camera()
-        self._randomize_lighting()
+        # self._randomize_lighting()
 
-        if self.constants.stabilize_objects:
-            stabilize_objects(self.mujoco_simulation)
+        # if self.constants.stabilize_objects:
+        #     stabilize_objects(self.mujoco_simulation)
 
         self.mujoco_simulation.forward()
 
@@ -1013,7 +1014,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
     @classmethod
     def build_simulation_randomizers(cls, constants):
         return [
-            GravityRandomizer(),
+            # GravityRandomizer(),
             # JointMarginRandomizer(),
             # GenericSimRandomizer(
             #     name="dof_frictionloss_robot",

@@ -41,7 +41,7 @@ def extract_object_name(mesh_files: List[str]) -> str:
 class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     # Whether to sample meshes with replacement
     sample_with_replacement: bool = True
-    success_threshold: dict = {"obj_pos": 0.03, "obj_rot": 0.2}
+    success_threshold: dict = {"obj_pos": 0.04, "obj_rot": 0.3}
 
 
 class YcbRearrangeEnv(
@@ -99,13 +99,14 @@ class YcbRearrangeEnv(
         full_action = np.zeros(5)
         full_action[:2] = action[:]
         obs, reward, done, info = super().step(full_action)
+        # obs, reward, done, info = super().step(action)
         # embed()
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
         obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
         obs["is_success"] = info["goal_achieved"]
 
-        # cprint("step in env", "red")
+        # cprint(obs["is_success"], "red")
 
         return obs, reward, done, info
     def reset(self):
@@ -113,6 +114,7 @@ class YcbRearrangeEnv(
         obs = super().reset()
         for i in range(6):
             self.step([-0.5, 0])
+            # self.step([-0.5, 0, 0,0,0])
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
         obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
