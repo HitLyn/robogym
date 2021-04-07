@@ -44,7 +44,7 @@ class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     success_threshold: dict = {"obj_pos": 0.05, "obj_rot": 0.2}
 
 
-class YcbRearrangeEnv(
+class YcbPushEnv(
     MeshRearrangeEnv[
         MeshRearrangeEnvParameters, YcbRearrangeEnvConstants, MeshRearrangeSim,
     ]
@@ -97,7 +97,7 @@ class YcbRearrangeEnv(
 
     def step(self, action):
         full_action = np.zeros(5)
-        full_action[:2] = action[:]
+        full_action[:3] = action[:]
         obs, reward, done, info = super().step(full_action)
         # obs, reward, done, info = super().step(action)
         # embed()
@@ -113,7 +113,7 @@ class YcbRearrangeEnv(
         # cprint("env reset", "red")
         obs = super().reset()
         for i in range(6):
-            self.step([-0.5, 0])
+            self.step([-0.5, 0, 0])
             # self.step([-0.5, 0, 0,0,0])
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
@@ -122,27 +122,5 @@ class YcbRearrangeEnv(
 
         return obs
 
-make_env = YcbRearrangeEnv.build
+make_env = YcbPushEnv.build
 
-if __name__ == '__main__':
-    # in /push/simulation/base.py: set_object_colors() to change target object color
-    from mujoco_py import GlfwContext
-    import numpy as np
-    import matplotlib.pyplot as plt
-    GlfwContext(offscreen=True)  # Create a window to init GLFW.
-    env = make_env()
-    for n in range(300):
-        env.reset()
-        for j in range(6):
-            env.step([-0.5, 0, 0, 0, 0])
-        for i in range(10):
-            name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
-            # now = datetime.now()
-            # current_time = now.strftime("%H:%M:%S")
-            # name = path + current_time
-            array = env.render(mode="rgb_array")
-            plt.imsave(name, array, format='png')
-            # plt.show()
-            x = np.random.uniform(-1, 1)
-            y = np.random.uniform(-1, 1)
-            env.step([x, y, 0, 0, 0])
