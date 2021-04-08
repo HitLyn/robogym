@@ -112,8 +112,9 @@ class YcbPushEnv(
     def reset(self):
         # cprint("env reset", "red")
         obs = super().reset()
-        for i in range(6):
-            self.step([-0.5, 0, 0])
+        # for i in range(6):
+        #     self.step([-0.5, 0, 0])
+        #     print('step')
             # self.step([-0.5, 0, 0,0,0])
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
@@ -123,4 +124,8 @@ class YcbPushEnv(
         return obs
 
 make_env = YcbPushEnv.build
+
+if __name__ == '__main__':
+    env = make_env()
+    env.reset()
 

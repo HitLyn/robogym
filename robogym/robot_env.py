@@ -767,7 +767,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         self.t = 0
 
         # Reset randomization
-        self.randomization.reset()
+        # self.randomization.reset()
 
         # Randomize parameters.
         self.parameters = self.randomization.parameter_randomizer.randomize(
@@ -779,9 +779,9 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         # Randomize simulation. Because sim is recreated in self._reset(),
         # simulation_randomizer.randomize should be called after the _reset.
         # embed()
-        self.randomization.simulation_randomizer.randomize(
-            self.mujoco_simulation.mj_sim, self._random_state
-        )
+        # self.randomization.simulation_randomizer.randomize(
+        #     self.mujoco_simulation.mj_sim, self._random_state
+        # )
 
         # reset observer.
         self.observer.reset()

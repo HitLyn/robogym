@@ -68,8 +68,8 @@ class ArmSimulationInterface(SimulationInterface):
     def build(
         cls,
         robot_control_params: RobotControlParameters,
-        n_substeps=40,
-        mujoco_timestep=0.001,
+        n_substeps=4,
+        mujoco_timestep=0.02,
     ):
         xml = cls.make_world_xml(
             contact_params=dict(njmax=200, nconmax=200, nuserdata=200),
