@@ -126,6 +126,13 @@ class YcbPushEnv(
 make_env = YcbPushEnv.build
 
 if __name__ == '__main__':
+    from mujoco_py import GlfwContext
+    GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
     env.reset()
+    env.render()
+    array = env.render(mode="rgb_array")
+    name = '/homeL/cong/1'
+    plt.imsave(name, array, format='png')
+    plt.show()
 

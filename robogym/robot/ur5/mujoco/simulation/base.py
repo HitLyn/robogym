@@ -131,7 +131,7 @@ class ArmSimulationInterface(SimulationInterface):
         width=DEFAULT_RENDER_SIZE,
         height=DEFAULT_RENDER_SIZE,
         *,
-        camera_name="vision_cam_front",
+        camera_name="phys_checks_cam",
         depth=False,
         mode="offscreen",
         device_id=-1,

@@ -108,8 +108,8 @@ class VisionArgs:
 
 @attr.s(auto_attribs=True)
 class RearrangeEnvConstants(RobotEnvConstants):
-    mujoco_substeps: int = 40
-    mujoco_timestep: float = 0.001
+    mujoco_substeps: int = 4
+    mujoco_timestep: float = 0.02
 
     # If this is set to true, new "masked_*" observation keys will be created with goal and
     # object states where objects outside the placement area will be zeroed out.
