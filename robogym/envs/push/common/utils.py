@@ -14,6 +14,7 @@ import trimesh
 from collision import Poly, Vector, collide
 from mujoco_py import MjSim, const
 from numpy.random import RandomState
+from IPython import embed
 
 from robogym.mujoco.mujoco_xml import ASSETS_DIR, MujocoXML
 from robogym.utils.env_utils import InvalidSimulationError
@@ -73,7 +74,7 @@ def sample_group_counts(
     return counts
 
 
-def stabilize_objects(mujoco_simulation, n_steps: int = 100):
+def stabilize_objects(mujoco_simulation, n_steps: int = 150):
     """
     Stabilize objects.
     """
@@ -82,6 +83,8 @@ def stabilize_objects(mujoco_simulation, n_steps: int = 100):
 
     # Decrease damping value to make object stabilize faster.
     mujoco_simulation.set_object_damping(1e-3)
+    # embed();exit()
+    # mujoco_simulation.set_qvel()
 
     # Step simulation to let object stabilize.
     for _ in range(n_steps):
@@ -624,6 +627,7 @@ def _place_objects(
     object_bounding_boxes: np.ndarray,
     table_dimensions: Tuple[np.ndarray, np.ndarray, float],
     placement_area: PlacementArea,
+    tcp_pos: np.ndarray,
     get_proposal: Callable[[int], Tuple[NumType, NumType]],
     max_placement_trial_count: int,
     max_placement_trial_count_per_object: int,
@@ -641,6 +645,7 @@ def _place_objects(
             object_bounding_boxes,
             table_dimensions,
             placement_area,
+            tcp_pos,
             get_proposal,
             max_placement_trial_count_per_object,
             run_collision_check,
@@ -654,6 +659,7 @@ def _place_objects_trial(
     object_bounding_boxes: np.ndarray,
     table_dimensions: Tuple[np.ndarray, np.ndarray, float],
     placement_area: PlacementArea,
+    tcp_pos: np.ndarray,
     get_proposal: Callable[[int], Tuple[NumType, NumType]],
     max_placement_trial_count_per_object: int,
     run_collision_check: bool = True,
@@ -687,6 +693,17 @@ def _place_objects_trial(
     def _get_global_placement(placement: np.ndarray):
         return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
+    def get_object_position(bounding_box, tcp_pos):
+        x_low = 0.0
+        x_high = 0.2
+        y_low = -0.15
+        y_high = 0.15
+        x, y = tcp_pos[:2]
+        while np.linalg.norm(np.array([x, y]) - tcp_pos[:2]) < np.linalg.norm(bounding_box[:2]):
+            x, y = np.random.uniform([tcp_pos[0] + x_low, tcp_pos[1] + y_low], [tcp_pos[0] + x_high, tcp_pos[1] + y_high])
+
+        return x, y
+
     # place the objects one by one, resampling if a collision with previous objects happens
     n_objects = object_bounding_boxes.shape[0]
     placements: List[Tuple[NumType, NumType, NumType]] = []
@@ -696,20 +713,11 @@ def _place_objects_trial(
 
         # Reference is to (xmin, ymin, zmin) of table.
         prop_z = object_bounding_boxes[i, 1, -1] + 2 * table_size[-1]
-        prop_z -= object_bounding_boxes[i, 0, -1]
-        while True:
-            prop_x, prop_y = get_proposal(i)
-            placement = _get_global_placement(np.array([prop_x, prop_y, prop_z]))
-            b1_x, b1_y = placement[:2]
-            if not run_collision_check or _is_valid_proposal(
-                b1_x, b1_y, i, object_bounding_boxes, placements
-            ):
-                break
-
-            placement_trial_count += 1
-
-            if placement_trial_count > max_placement_trial_count_per_object:
-                return np.zeros((n_objects, len(placement))), False
+        # prop_z -= object_bounding_boxes[i, 0, -1]
+        prop_x, prop_y = get_object_position(object_bounding_boxes[i], tcp_pos)
+        # placement = _get_global_placement(np.array([prop_x, prop_y, prop_z]))
+        placement = np.array([prop_x, prop_y, prop_z])
+        # embed();exit()
 
         placements.append(placement)
 
@@ -833,6 +841,7 @@ def place_objects_with_no_constraint(
     object_bounding_boxes: np.ndarray,
     table_dimensions: Tuple[np.ndarray, np.ndarray, float],
     placement_area: PlacementArea,
+    tcp_pos: np.ndarray,
     max_placement_trial_count: int,
     max_placement_trial_count_per_object: int,
     random_state: np.random.RandomState,
@@ -875,6 +884,7 @@ def place_objects_with_no_constraint(
         object_bounding_boxes,
         table_dimensions,
         placement_area,
+        tcp_pos,
         _get_placement_proposal,
         max_placement_trial_count,
         max_placement_trial_count_per_object,

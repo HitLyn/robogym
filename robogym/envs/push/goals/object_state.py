@@ -449,6 +449,7 @@ class ObjectStateGoal(GoalGenerator):
             self.mujoco_simulation.get_object_bounding_boxes(),
             self.mujoco_simulation.get_table_dimensions(),
             self.mujoco_simulation.get_placement_area(),
+            self.mujoco_simulation.mj_sim.data.get_body_xpos("ur5_wrist_3_link"),
             max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
             max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
             random_state=random_state,

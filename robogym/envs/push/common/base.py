@@ -803,27 +803,17 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         Generate placement for each object. Return object placement and a
         boolean indicating whether the placement is valid.
         """
-        placement, is_valid = place_objects_in_grid(
+
+        return place_objects_with_no_constraint(
             self.mujoco_simulation.get_object_bounding_boxes(),
             self.mujoco_simulation.get_table_dimensions(),
             self.mujoco_simulation.get_placement_area(),
+            self.mujoco_simulation.mj_sim.data.get_body_xpos("ur5_wrist_3_link"),
+            max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
+            max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
             random_state=self._random_state,
-            max_num_trials=self.mujoco_simulation.max_placement_retry,
         )
 
-        if not is_valid:
-            # Fall back to random placement, which works better for envs with more irregular
-            # objects (e.g. ycb-8 with no mesh normalization).
-            return place_objects_with_no_constraint(
-                self.mujoco_simulation.get_object_bounding_boxes(),
-                self.mujoco_simulation.get_table_dimensions(),
-                self.mujoco_simulation.get_placement_area(),
-                max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
-                max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
-                random_state=self._random_state,
-            )
-        else:
-            return placement, is_valid
 
     def _calculate_num_success(self, goal_distance) -> float:
         """
@@ -899,8 +889,8 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         )
 
     def _reset(self):
-        # if self.constants.use_fixed_seed:
-        #     self.seed(self.seed())
+        if self.constants.use_fixed_seed:
+            self.seed(self.seed())
 
         # This needs to happen before sim creation because sim creation depends
         # on the mujoco args generated from material randomization.
@@ -914,8 +904,8 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         # self._randomize_camera()
         # self._randomize_lighting()
 
-        # if self.constants.stabilize_objects:
-        #     stabilize_objects(self.mujoco_simulation)
+        if self.constants.stabilize_objects:
+            stabilize_objects(self.mujoco_simulation)
 
         self.mujoco_simulation.forward()
 
