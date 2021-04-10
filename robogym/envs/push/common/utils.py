@@ -74,14 +74,14 @@ def sample_group_counts(
     return counts
 
 
-def stabilize_objects(mujoco_simulation, n_steps: int = 150):
+def stabilize_objects(mujoco_simulation, n_steps: int = 100):
     """
     Stabilize objects.
     """
     # Store original damping value for objects.
     damping = mujoco_simulation.get_object_damping()
 
-    # Decrease damping value to make object stabilize faster.
+    # Decrease damping value to make object stabilize faster.y
     mujoco_simulation.set_object_damping(1e-3)
     # embed();exit()
     # mujoco_simulation.set_qvel()

@@ -56,6 +56,7 @@ from robogym.wrappers.util import (
     SmoothActionWrapper,
 )
 from IPython import embed
+from termcolor import cprint
 
 logger = logging.getLogger(__name__)
 
@@ -741,9 +742,10 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         # Check if goal placement is valid here.
         if not self._goal["goal_valid"]:
             if raise_when_invalid:
-                raise InvalidSimulationError(
-                    self._goal.get("goal_invalid_reason", "Goal is invalid.")
-                )
+                # raise InvalidSimulationError(
+                #     self._goal.get("goal_invalid_reason", "Goal is invalid.")
+                # )
+                cprint("goal invalid", "red")
             else:
                 logger.info(
                     "InvalidSimulationError: "
