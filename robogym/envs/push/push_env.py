@@ -112,9 +112,6 @@ class YcbRearrangeEnv(
     def reset(self):
         # cprint("env reset", "red")
         obs = super().reset()
-        for i in range(6):
-            self.step([-0.5, 0])
-            # self.step([-0.5, 0, 0,0,0])
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
         obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
         obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])

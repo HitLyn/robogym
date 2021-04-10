@@ -689,7 +689,10 @@ class RearrangeSimulationInterface(
             joint_name = f"object{i}:joint"
             joint_qpos = self.mj_sim.data.get_joint_qpos(joint_name)
             joint_qpos[:3] = object_positions[i]
+            joint_qvel = self.mj_sim.data.get_joint_qvel(joint_name)
+            joint_qvel[:] = 0.
             self.mj_sim.data.set_joint_qpos(joint_name, joint_qpos)
+            self.mj_sim.data.set_joint_qvel(joint_name, joint_qvel)
 
     def set_object_quat(self, object_quats: np.ndarray):
         assert object_quats.shape == (self.num_objects, 4), (

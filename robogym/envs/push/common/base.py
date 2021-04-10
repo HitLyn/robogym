@@ -906,8 +906,8 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         # self._randomize_camera()
         # self._randomize_lighting()
 
-        if self.constants.stabilize_objects:
-            stabilize_objects(self.mujoco_simulation)
+        # if self.constants.stabilize_objects:
+        #     stabilize_objects(self.mujoco_simulation)
 
         self.mujoco_simulation.forward()
 
