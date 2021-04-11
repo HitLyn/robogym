@@ -41,7 +41,7 @@ def extract_object_name(mesh_files: List[str]) -> str:
 class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     # Whether to sample meshes with replacement
     sample_with_replacement: bool = True
-    success_threshold: dict = {"obj_pos": 0.05, "obj_rot": 0.2}
+    success_threshold: dict = {"obj_pos": 0.04, "obj_rot": 0.2}
 
 
 class YcbRearrangeEnv(
@@ -55,7 +55,7 @@ class YcbRearrangeEnv(
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["013_apple",
+        push_candidates = ["077_rubiks_cube",
                            ]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']

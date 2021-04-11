@@ -695,9 +695,9 @@ def _place_objects_trial(
 
     def get_object_position(bounding_box, tcp_pos):
         x_low = 0.0
-        x_high = 0.2
-        y_low = -0.15
-        y_high = 0.15
+        x_high = 0.1
+        y_low = -0.1
+        y_high = 0.1
         x, y = tcp_pos[:2]
         while np.linalg.norm(np.array([x, y]) - tcp_pos[:2]) < np.linalg.norm(bounding_box[:2]):
             x, y = np.random.uniform([tcp_pos[0] + x_low, tcp_pos[1] + y_low], [tcp_pos[0] + x_high, tcp_pos[1] + y_high])
