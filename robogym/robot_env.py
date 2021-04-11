@@ -567,12 +567,20 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
         return self._is_successful(goal_distance)
 
     def _is_successful(self, goal_distance):
-        return all(
+        per_goal_successful = np.stack(
             [
-                np.all(goal_distance[k] < self.constants.success_threshold[k])
+                goal_distance[k] < self.constants.success_threshold[k]
                 for k in self.constants.success_threshold
-            ]
-        )
+            ],
+            axis=0,
+        )  # Dimensions [metric, object]
+        if self.goal_type == 'all':
+            per_goal_successful = np.all(per_goal_successful, axis=0)  # Dimensions [object]
+        elif self.goal_type == 'pos':
+            per_goal_successful = goal_distance['obj_pos'] < self.constants.success_threshold['obj_pos']
+        elif sel.goal_type == 'rot':
+            per_goal_successful = goal_distance['obj_rot'] < self.constants.success_threshold['obj_rot']
+        return np.sum(per_goal_successful)
 
     def _get_goal_info(self):
         """ Calculate information about current state of the goal """

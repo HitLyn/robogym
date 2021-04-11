@@ -51,14 +51,15 @@ class YcbPushEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, goal_type = 'pos', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["035_power_drill",
+        push_candidates = ["013_apple",
                            ]
         self.parameters.mesh_names = push_candidates
-
+        self.goal_type = goal_type # from ['pos', 'goal', 'all']
+        
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
         super()._recreate_sim()

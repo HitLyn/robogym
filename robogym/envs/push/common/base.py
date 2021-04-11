@@ -833,7 +833,12 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
             ],
             axis=0,
         )  # Dimensions [metric, object]
-        per_goal_successful = np.all(per_goal_successful, axis=0)  # Dimensions [object]
+        if self.goal_type == 'all':
+            per_goal_successful = np.all(per_goal_successful, axis=0)  # Dimensions [object]
+        elif self.goal_type == 'pos':
+            per_goal_successful = goal_distance['obj_pos'] < self.constants.success_threshold['obj_pos']
+        elif sel.goal_type == 'rot':
+            per_goal_successful = goal_distance['obj_rot'] < self.constants.success_threshold['obj_rot']
         return np.sum(per_goal_successful) * self.constants.goal_reward_per_object
 
     def _calculate_goal_distance_reward(

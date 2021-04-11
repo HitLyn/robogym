@@ -51,13 +51,14 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, goal_type = 'pos', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["035_power_drill",
+        push_candidates = ["013_apple",
                            ]
         self.parameters.mesh_names = push_candidates
+        self.goal_type = goal_type # from ['pos', 'goal', 'all']
 
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -123,15 +124,15 @@ make_env = YcbRearrangeEnv.build
 
 if __name__ == '__main__':
     # in /push/simulation/base.py: set_object_colors() to change target object color
-    from mujoco_py import GlfwContext
+    # from mujoco_py import GlfwContext
     import numpy as np
-    import matplotlib.pyplot as plt
-    GlfwContext(offscreen=True)  # Create a window to init GLFW.
+    # import matplotlib.pyplot as plt
+    # GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
     for n in range(300):
         env.reset()
         for j in range(6):
-            env.step([-0.5, 0, 0, 0, 0])
+            env.step([-0.5, 0])
         for i in range(10):
             name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
             # now = datetime.now()
