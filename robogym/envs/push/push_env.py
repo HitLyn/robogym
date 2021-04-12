@@ -59,6 +59,8 @@ class YcbRearrangeEnv(
                            ]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']
+        self.x_range = np.array([0.43, 0.8])
+        self.y_range = np.array([0.50, 1.05])
 
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -96,9 +98,21 @@ class YcbRearrangeEnv(
 
         return simulation_info
 
+    def clip_action(self, gripper_pos, action):
+        # x direction
+        if gripper_pos[0] + action[0]*0.07 >= self.x_range[1] or gripper_pos[0] + action[0]*0.07 <= self.x_range[0]:
+            action[0] = 0
+        if gripper_pos[1] + action[1]*0.07 >= self.y_range[1] or gripper_pos[1] + action[1]*0.07 <= self.y_range[0]:
+            action[1] = 0
+        return action
+
     def step(self, action):
+        # check movtion range
+        obs, reward, done, info = self.get_observation()
+        gripper_pos = obs["gripper_pos"]
+        clipped_action = self.clip_action(gripper_pos, action)
         full_action = np.zeros(5)
-        full_action[:2] = action[:]
+        full_action[:2] = clipped_action[:]
         obs, reward, done, info = super().step(full_action)
         # obs, reward, done, info = super().step(action)
         # embed()

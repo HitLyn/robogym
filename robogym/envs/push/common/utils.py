@@ -694,8 +694,8 @@ def _place_objects_trial(
         return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
     def get_object_position(bounding_box, tcp_pos):
-        x_low = 0.0
-        x_high = 0.1
+        x_low = -0.05
+        x_high = 0.05
         y_low = -0.1
         y_high = 0.1
         x, y = tcp_pos[:2]

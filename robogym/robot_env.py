@@ -850,7 +850,7 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
 
         obs, reward, done, info = self.get_observation(robot_exception=robot_exception)
         # embed()
-        reward = np.float(info["goal_achieved"])
+        reward = np.float(info["goal_achieved"]) - 1
         # print("goal achieved:", info["goal_achieved"])
         # print("done:", done)
         # print("step:", self.t)
