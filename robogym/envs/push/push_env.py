@@ -11,6 +11,7 @@ from robogym.envs.push.common.mesh import (
 )
 from robogym.envs.push.common.utils import find_meshes_by_dirname
 from robogym.envs.push.simulation.mesh import MeshRearrangeSim
+from robogym.utils import rotation
 from matplotlib import pyplot as plt
 from datetime import datetime
 from IPython import embed
@@ -41,7 +42,7 @@ def extract_object_name(mesh_files: List[str]) -> str:
 class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     # Whether to sample meshes with replacement
     sample_with_replacement: bool = True
-    success_threshold: dict = {"obj_pos": 0.04, "obj_rot": 0.2}
+    success_threshold: dict = {"obj_pos": 0.05, "obj_rot": 0.2}
 
 
 class YcbRearrangeEnv(
@@ -59,8 +60,8 @@ class YcbRearrangeEnv(
                            ]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']
-        self.x_range = np.array([0.43, 0.8])
-        self.y_range = np.array([0.50, 1.05])
+        self.x_range = np.array([0.43, 0.85])
+        self.y_range = np.array([0.40, 1.10])
 
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -116,9 +117,12 @@ class YcbRearrangeEnv(
         obs, reward, done, info = super().step(full_action)
         # obs, reward, done, info = super().step(action)
         # embed()
-        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
+        # obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+        # obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy()])
+        # obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(), obs["goal_obj_rot"].squeeze().copy()])
         obs["is_success"] = info["goal_achieved"]
 
         # cprint(obs["is_success"], "red")
@@ -127,9 +131,9 @@ class YcbRearrangeEnv(
     def reset(self):
         # cprint("env reset", "red")
         obs = super().reset()
-        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze(), obs["gripper_pos"]])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze(), obs["obj_rot"].squeeze()])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze(), obs["goal_obj_rot"].squeeze()])
+        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy()])
+        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(),])
         obs["is_success"] = False
 
         return obs
@@ -146,7 +150,7 @@ if __name__ == '__main__':
     for n in range(300):
         env.reset()
         for j in range(6):
-            env.step([-0.5, 0])
+            env.step([-0.1, 0])
         for i in range(10):
             name = '/homeL/cong/Dataset/push_sim/' + str(n) + '_' + str(i)
             # now = datetime.now()
