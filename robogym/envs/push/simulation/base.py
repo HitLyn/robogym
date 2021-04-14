@@ -180,6 +180,7 @@ class RearrangeSimulationInterface(
             self.register_joint_group(f"object{i}", prefix=[f"object{i}:"])
             # Verify the qpos and qvel arrays are the proper lengths (there was previously a bug
             # which caused this to not be the case when > 10 objects existed).
+            # embed()
             assert len(self.get_qpos(f"object{i}")) == 7
             assert len(self.get_qvel(f"object{i}")) == 6
 

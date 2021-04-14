@@ -22,7 +22,7 @@ from robogym.utils.mesh import get_vertices_bounding_box, subdivide_mesh
 from robogym.utils.misc import robogym_path
 from robogym.utils.rotation import mat2quat, quat2mat, quat_conjugate, uniform_quat
 
-MATERIAL_DIR = robogym_path("envs", "rearrange", "materials")
+MATERIAL_DIR = robogym_path("envs", "push", "materials")
 
 NumType = Union[int, float]
 

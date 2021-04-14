@@ -585,6 +585,8 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
         names = self._random_state.choice(
             self.parameters.material_names, size=num_groups
         )
+        # embed()
+        # self.mujoco_simulation.set_constants()
         return [material_args[name] for name in names]
 
     def _sample_object_colors(

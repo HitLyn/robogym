@@ -52,15 +52,16 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, goal_type = 'pos', *args, **kwargs):
+    def __init__(self, goal_type = 'all', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["077_rubiks_cube",
-                           ]
+        push_candidates = ["simple_objects",]
+        # push_candidates = ["035_power_drill"]
+        # push_candidates = ["077_rubiks_cube"]
         self.parameters.mesh_names = push_candidates
-        self.goal_type = goal_type # from ['pos', 'goal', 'all']
-        self.x_range = np.array([0.43, 0.85])
+        self.goal_type = goal_type # from ['pos', 'rot', 'all']
+        self.x_range = np.array([0.43, 0.90])
         self.y_range = np.array([0.40, 1.10])
 
     def _recreate_sim(self) -> None:
@@ -113,16 +114,17 @@ class YcbRearrangeEnv(
         gripper_pos = obs["gripper_pos"]
         clipped_action = self.clip_action(gripper_pos, action)
         full_action = np.zeros(5)
-        full_action[:2] = clipped_action[:]
+        full_action[:2] = clipped_action[:2]
         obs, reward, done, info = super().step(full_action)
         # obs, reward, done, info = super().step(action)
         # embed()
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
-        # obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        # obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy()])
-        # obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(), obs["goal_obj_rot"].squeeze().copy()])
+        if self.goal_type == 'pos':
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
+        else:
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy()])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(), obs["goal_obj_rot"].squeeze().copy()])
         obs["is_success"] = info["goal_achieved"]
 
         # cprint(obs["is_success"], "red")
@@ -132,8 +134,12 @@ class YcbRearrangeEnv(
         # cprint("env reset", "red")
         obs = super().reset()
         obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy()])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(),])
+        if self.goal_type == 'pos':
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
+        else:
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy()])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(), obs["goal_obj_rot"].squeeze().copy()])
         obs["is_success"] = False
 
         return obs
