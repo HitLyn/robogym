@@ -56,9 +56,9 @@ class YcbRearrangeEnv(
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["simple_objects",]
+        # push_candidates = ["simple_objects",]
         # push_candidates = ["035_power_drill"]
-        # push_candidates = ["077_rubiks_cube"]
+        push_candidates = ["077_rubiks_cube"]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'rot', 'all']
         self.x_range = np.array([0.43, 0.90])
