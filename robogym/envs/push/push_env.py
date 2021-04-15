@@ -54,13 +54,13 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, goal_type = 'all', compute_goal_type = 'pos', *args, **kwargs):
+    def __init__(self, goal_type = 'pos', compute_goal_type = 'pos', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["simple_objects",]
+        # push_candidates = ["r_40_cylinder",]
         # push_candidates = ["035_power_drill"]
-        # push_candidates = ["077_rubiks_cube"]
+        push_candidates = ["077_rubiks_cube"]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'rot', 'all'] # determine the state dimension
         self.compute_goal_type = compute_goal_type # determine how the reward computes
