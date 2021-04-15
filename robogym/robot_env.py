@@ -574,11 +574,11 @@ class RobotEnv(gym.Env, Generic[PType, CType, SType], metaclass=EnvMeta):
             ],
             axis=0,
         )  # Dimensions [metric, object]
-        if self.goal_type == 'all':
+        if self.compute_goal_type == 'all':
             per_goal_successful = np.all(per_goal_successful, axis=0)  # Dimensions [object]
-        elif self.goal_type == 'pos':
+        elif self.compute_goal_type == 'pos':
             per_goal_successful = goal_distance['obj_pos'] < self.constants.success_threshold['obj_pos']
-        elif sel.goal_type == 'rot':
+        elif self.compute_goal_type == 'rot':
             per_goal_successful = goal_distance['obj_rot'] < self.constants.success_threshold['obj_rot']
         return np.sum(per_goal_successful)
 

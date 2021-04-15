@@ -109,8 +109,8 @@ class VisionArgs:
 
 @attr.s(auto_attribs=True)
 class RearrangeEnvConstants(RobotEnvConstants):
-    mujoco_substeps: int = 4
-    mujoco_timestep: float = 0.02
+    mujoco_substeps: int = 40
+    mujoco_timestep: float = 0.001
 
     # If this is set to true, new "masked_*" observation keys will be created with goal and
     # object states where objects outside the placement area will be zeroed out.
@@ -835,11 +835,14 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
             ],
             axis=0,
         )  # Dimensions [metric, object]
-        if self.goal_type == 'all':
+        if self.compute_goal_type == 'all':
             per_goal_successful = np.all(per_goal_successful, axis=0)  # Dimensions [object]
-        elif self.goal_type == 'pos':
+        elif self.compute_goal_type == 'pos':
             per_goal_successful = goal_distance['obj_pos'] < self.constants.success_threshold['obj_pos']
-        elif sel.goal_type == 'rot':
+            # print(goal_distance)
+            # print(per_goal_successful)
+            # print('compute success: ', np.sum(per_goal_successful) * self.constants.goal_reward_per_object)
+        elif sel.compute_goal_type == 'rot':
             per_goal_successful = goal_distance['obj_rot'] < self.constants.success_threshold['obj_rot']
         return np.sum(per_goal_successful) * self.constants.goal_reward_per_object
 
@@ -848,6 +851,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
     ) -> float:
         previous_num_success = self._calculate_num_success(previous_goal_distance)
         num_success = self._calculate_num_success(goal_distance)
+        # print('success: ', num_success)
         return num_success - previous_num_success
 
     def _recreate_sim(self) -> None:

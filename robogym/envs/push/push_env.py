@@ -12,7 +12,7 @@ from robogym.envs.push.common.mesh import (
 from robogym.envs.push.common.utils import find_meshes_by_dirname
 from robogym.envs.push.simulation.mesh import MeshRearrangeSim
 from robogym.utils import rotation
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 from datetime import datetime
 from IPython import embed
 logger = logging.getLogger(__name__)
@@ -43,6 +43,8 @@ class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     # Whether to sample meshes with replacement
     sample_with_replacement: bool = True
     success_threshold: dict = {"obj_pos": 0.05, "obj_rot": 0.2}
+    mujoco_substeps: int = 4
+    mujoco_timestep: float = 0.02
 
 
 class YcbRearrangeEnv(
@@ -52,15 +54,16 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, goal_type = 'all', *args, **kwargs):
+    def __init__(self, goal_type = 'all', compute_goal_type = 'pos', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        # push_candidates = ["simple_objects",]
+        push_candidates = ["simple_objects",]
         # push_candidates = ["035_power_drill"]
-        push_candidates = ["077_rubiks_cube"]
+        # push_candidates = ["077_rubiks_cube"]
         self.parameters.mesh_names = push_candidates
-        self.goal_type = goal_type # from ['pos', 'rot', 'all']
+        self.goal_type = goal_type # from ['pos', 'rot', 'all'] # determine the state dimension
+        self.compute_goal_type = compute_goal_type # determine how the reward computes
         self.x_range = np.array([0.43, 0.90])
         self.y_range = np.array([0.40, 1.10])
 
