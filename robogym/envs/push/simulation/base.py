@@ -356,10 +356,10 @@ class RearrangeSimulationInterface(
     @contextmanager
     def hide_objects(self, hide_robot=False):
         """
-        A context manager in scope of which all objects and target objects are hidden.
+        A context manager in scope of which all objects are hidden (targets not included).
         """
         return self._hide_geoms(
-            hide_targets=True, hide_objects=True, hide_robot=hide_robot
+            hide_targets=False, hide_objects=True, hide_robot=hide_robot
         )
 
     def _hide_geoms(self, hide_targets=False, hide_objects=False, hide_robot=False):
@@ -754,7 +754,7 @@ class RearrangeSimulationInterface(
                 self.mj_sim.model.geom_rgba[target_geom_ids, :] = color
 
             # self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.0
-            self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.2
+            self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.4
 
     def set_object_damping(self, damping: Union[float, np.ndarray]):
         if isinstance(damping, float):

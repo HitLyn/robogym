@@ -17,6 +17,14 @@ from datetime import datetime
 from IPython import embed
 logger = logging.getLogger(__name__)
 
+import cv2
+from torchvision import transforms
+import torch
+from VisualRL.vae.model import VAE
+
+# visual pushing, add the following two lines to create offscreen rendering
+from mujoco_py import GlfwContext
+GlfwContext(offscreen=True)  # Create a window to init GLFW
 
 def find_ycb_meshes() -> Dict[str, list]:
     return find_meshes_by_dirname("ycb")
@@ -54,19 +62,23 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, goal_type = 'pos', *args, **kwargs):
+    def __init__(self, goal_type = 'pos', ground_truth = False, device = 1, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
         # push_candidates = ["077_rubiks_cube",]
-        # push_candidates = ["len_8_block",]
-        push_candidates = ["len_8_block", "r_40_cylinder", "len_10_block", "len_6_block", "r_30_cylinder"]
+        push_candidates = ["r_40_cylinder",]
+        # push_candidates = ["len_8_block", "r_40_cylinder", "len_10_block", "len_6_block", "r_30_cylinder"]
         # push_candidates = ["035_power_drill", ]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']
         self.x_range = np.array([0.43, 0.90])
         self.y_range = np.array([0.35, 1.10])
-
+        # Visual part
+        self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
+        self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 6)
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_22-12_49/vae_model", 100, map_location=self.device)
+        self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
         super()._recreate_sim()
@@ -119,26 +131,63 @@ class YcbRearrangeEnv(
         full_action = np.zeros(5)
         full_action[:2] = clipped_action[:]
         obs, reward, done, info = super().step(full_action)
-        # obs, reward, done, info = super().step(action)
-        # embed()
-        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
-        # obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        # obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy()])
-        # obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(), obs["goal_obj_rot"].squeeze().copy()])
-        obs["is_success"] = info["goal_achieved"]
-
-        # cprint(obs["is_success"], "red")
+        if self.ground_truth:
+            obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
+            obs["is_success"] = info["goal_achieved"]
+        else:
+            object_latent, target_latent = self.get_visual_latent()
+            obs["observation"] = np.concatenate([object_latent.copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal"] = np.concatenate([object_latent.copy(),])
+            obs["desired_goal"] = np.concatenate([target_latent.copy()])
+            obs["is_success"] = info["goal_achieved"]
 
         return obs, reward, done, info
+
+    def get_visual_latent(self):
+        # visual rendering
+        full_image = self.render(mode = "rgb_array")
+        with self.mujoco_simulation.hide_target():
+            full_image_without_target = self.render(mode="rgb_array")
+        with self.mujoco_simulation.hide_objects():
+            full_image_without_object = self.render(mode = "rgb_array")
+        object_image = cv2.resize(full_image_without_target[200:, 100:400, :], (64, 64))
+        target_image = cv2.resize(full_image_without_object[200:, 100:400, :], (64, 64))
+        # rgb_image = cv2.cvtColor(crop_image, cv2.COLOR_BGR2RGB)
+        object_image = cv2.cvtColor(object_image, cv2.COLOR_RGB2HSV)
+        target_image = cv2.cvtColor(target_image, cv2.COLOR_RGB2HSV)
+
+        light_red = (0, 150, 0)
+        bright_red = (20, 255, 255)
+        object_mask = cv2.inRange(object_image, light_red, bright_red) #(64, 64)
+        target_mask = cv2.inRange(target_image, light_red, bright_red)  # (64, 64)
+        object_tensor = transforms.ToTensor()(object_mask).unsqueeze(0).to(self.device)
+        target_tensor = transforms.ToTensor()(target_mask).unsqueeze(0).to(self.device)
+
+        with torch.no_grad():
+            object_recon, object_z, object_mu, _ = self.model(object_tensor)
+            target_recon, target_z, target_mu, _ = self.model(target_tensor)
+        object_latent = object_mu[0].cpu().numpy()
+        target_latent = target_mu[0].cpu().numpy()
+
+        return object_latent, target_latent
+
+
     def reset(self):
         # cprint("env reset", "red")
         obs = super().reset()
-        obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
-        obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy()])
-        obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy(),])
-        obs["is_success"] = False
+        if self.ground_truth:
+            obs["observation"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
+            obs["is_success"] = False
+        else:
+            object_latent, target_latent = self.get_visual_latent()
+            obs["observation"] = np.concatenate([object_latent.copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal"] = np.concatenate([object_latent.copy(),])
+            obs["desired_goal"] = np.concatenate([target_latent.copy()])
+            obs["is_success"] = False
 
         return obs
 
