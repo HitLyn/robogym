@@ -352,6 +352,14 @@ class RearrangeSimulationInterface(
         return self._hide_geoms(
             hide_targets=True, hide_objects=False, hide_robot=hide_robot
         )
+    @contextmanager
+    def hide_robot(self, hide_robot=True):
+        """
+        A context manager in scope of which all target objects are hidden.
+        """
+        return self._hide_geoms(
+            hide_targets=False, hide_objects=False, hide_robot=hide_robot
+        )
 
     @contextmanager
     def hide_objects(self, hide_robot=False):
@@ -396,12 +404,15 @@ class RearrangeSimulationInterface(
             geom_ids_to_hide += object_ids
 
         if hide_robot:
-            robot_geom_ids = [
-                sim.model.geom_name2id(name)
-                for name in sim.model.geom_names
-                if name.startswith("ur5")
-            ]
+            # robot_geom_ids = [
+            #     sim.model.geom_name2id(name)
+            #     for name in sim.model.geom_names
+            #     if name.startswith("s_model") or name.startswith("pusher")
+            # ]
+            # embed();exit()
+            robot_geom_ids = [i for i in range(45)]
             geom_ids_to_hide += robot_geom_ids
+            # embed();exit()
 
         geom_rgba = sim.model.geom_rgba.copy()
         sim.model.geom_rgba[geom_ids_to_hide, -1] = 0.0

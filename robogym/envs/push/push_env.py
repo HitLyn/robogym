@@ -146,10 +146,10 @@ make_env = YcbRearrangeEnv.build
 
 if __name__ == '__main__':
     # in /push/simulation/base.py: set_object_colors() to change target object color
-    # from mujoco_py import GlfwContext
+    from mujoco_py import GlfwContext
     import numpy as np
-    # import matplotlib.pyplot as plt
-    # GlfwContext(offscreen=True)  # Create a window to init GLFW.
+    import matplotlib.pyplot as plt
+    GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
     for n in range(300):
         env.reset()
@@ -160,9 +160,12 @@ if __name__ == '__main__':
             # now = datetime.now()
             # current_time = now.strftime("%H:%M:%S")
             # name = path + current_time
-            array = env.render(mode="rgb_array")
-            plt.imsave(name, array, format='png')
-            # plt.show()
+            with env.mujoco_simulation.hide_robot():
+                array = env.render(mode="rgb_array")
+            # plt.imsave(name, array, format='png')
+            plt.imshow(array)
+            plt.show()
+            embed();exit()
             x = np.random.uniform(-1, 1)
             y = np.random.uniform(-1, 1)
             env.step([x, y, 0, 0, 0])

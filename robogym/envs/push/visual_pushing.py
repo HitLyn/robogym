@@ -67,7 +67,7 @@ class YcbRearrangeEnv(
 
         self._cached_object_names: Dict[str, str] = {}
         # push_candidates = ["077_rubiks_cube",]
-        push_candidates = ["r_40_cylinder",]
+        push_candidates = ["r_30_cylinder",]
         # push_candidates = ["len_8_block", "r_40_cylinder", "len_10_block", "len_6_block", "r_30_cylinder"]
         # push_candidates = ["035_power_drill", ]
         self.parameters.mesh_names = push_candidates
@@ -77,7 +77,7 @@ class YcbRearrangeEnv(
         # Visual part
         self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
         self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 6)
-        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_22-12_49/vae_model", 100, map_location=self.device)
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device)
         self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -149,11 +149,13 @@ class YcbRearrangeEnv(
         # visual rendering
         full_image = self.render(mode = "rgb_array")
         with self.mujoco_simulation.hide_target():
-            full_image_without_target = self.render(mode="rgb_array")
+            with self.mujoco_simulation.hide_robot():
+                full_image_without_target = self.render(mode="rgb_array")
         with self.mujoco_simulation.hide_objects():
-            full_image_without_object = self.render(mode = "rgb_array")
-        object_image = cv2.resize(full_image_without_target[200:, 100:400, :], (64, 64))
-        target_image = cv2.resize(full_image_without_object[200:, 100:400, :], (64, 64))
+            with self.mujoco_simulation.hide_robot():
+                full_image_without_object = self.render(mode = "rgb_array")
+        object_image = cv2.resize(full_image_without_target, (64, 64))
+        target_image = cv2.resize(full_image_without_object, (64, 64))
         # rgb_image = cv2.cvtColor(crop_image, cv2.COLOR_BGR2RGB)
         object_image = cv2.cvtColor(object_image, cv2.COLOR_RGB2HSV)
         target_image = cv2.cvtColor(target_image, cv2.COLOR_RGB2HSV)
@@ -170,6 +172,7 @@ class YcbRearrangeEnv(
             target_recon, target_z, target_mu, _ = self.model(target_tensor)
         object_latent = object_mu[0].cpu().numpy()
         target_latent = target_mu[0].cpu().numpy()
+        # embed();exit()
 
         return object_latent, target_latent
 
