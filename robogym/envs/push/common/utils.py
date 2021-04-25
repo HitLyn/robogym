@@ -632,6 +632,7 @@ def _place_objects(
     max_placement_trial_count: int,
     max_placement_trial_count_per_object: int,
     run_collision_check: bool = True,
+    target = False,
 ) -> Tuple[np.ndarray, bool]:
     """
     Wrapper for _place_objects_trial() function. Call _place_object_trial() multiple times until it
@@ -649,6 +650,7 @@ def _place_objects(
             get_proposal,
             max_placement_trial_count_per_object,
             run_collision_check,
+            target = target,
         )
         if is_valid:
             return placements, is_valid
@@ -663,6 +665,7 @@ def _place_objects_trial(
     get_proposal: Callable[[int], Tuple[NumType, NumType]],
     max_placement_trial_count_per_object: int,
     run_collision_check: bool = True,
+    target = False,
 ) -> Tuple[np.ndarray, bool]:
     """
     Place objects within rectangular boundaries with given get proposal function.
@@ -693,11 +696,11 @@ def _place_objects_trial(
     def _get_global_placement(placement: np.ndarray):
         return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
-    def get_object_position(bounding_box, tcp_pos):
-        x_low = -0.05
-        x_high = 0.15
-        y_low = -0.15
-        y_high = 0.15
+    def get_object_position(bounding_box, tcp_pos, target = False):
+        x_low = -0.0
+        x_high = 0.18 if target else 0.06
+        y_low = -0.18 if target else -0.06
+        y_high = 0.18 if target else 0.06
         x, y = tcp_pos.copy()[:2]
         while np.linalg.norm(np.array([x, y]) - tcp_pos[:2]) < np.linalg.norm(bounding_box[:2]):
             x, y = np.random.uniform([tcp_pos[0] + x_low, tcp_pos[1] + y_low], [tcp_pos[0] + x_high, tcp_pos[1] + y_high])
@@ -714,7 +717,7 @@ def _place_objects_trial(
         # Reference is to (xmin, ymin, zmin) of table.
         prop_z = object_bounding_boxes[i, 1, -1] + 2 * table_size[-1]
         # prop_z -= object_bounding_boxes[i, 0, -1]
-        prop_x, prop_y = get_object_position(object_bounding_boxes[i], tcp_pos)
+        prop_x, prop_y = get_object_position(object_bounding_boxes[i], tcp_pos, target = target)
         # placement = _get_global_placement(np.array([prop_x, prop_y, prop_z]))
         placement = np.array([prop_x, prop_y, prop_z])
         # embed();exit()
@@ -845,6 +848,7 @@ def place_objects_with_no_constraint(
     max_placement_trial_count: int,
     max_placement_trial_count_per_object: int,
     random_state: np.random.RandomState,
+    target = False,
 ) -> Tuple[np.ndarray, bool]:
     """
     Place objects within rectangular boundaries without any extra constraint.
@@ -888,6 +892,7 @@ def place_objects_with_no_constraint(
         _get_placement_proposal,
         max_placement_trial_count,
         max_placement_trial_count_per_object,
+        target = target,
     )
 
 
