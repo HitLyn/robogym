@@ -160,8 +160,8 @@ if __name__ == '__main__':
             # now = datetime.now()
             # current_time = now.strftime("%H:%M:%S")
             # name = path + current_time
-            with env.mujoco_simulation.hide_robot():
-                array = env.render(mode="rgb_array")
+            # with env.mujoco_simulation.hide_robot():
+            array = env.render(mode="rgb_array")
             # plt.imsave(name, array, format='png')
             plt.imshow(array)
             plt.show()

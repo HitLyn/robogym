@@ -961,6 +961,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
                 noise_scale /= np.sqrt(-2 * np.log(1 - success_prob))
                 noise_scale[:, 2] = 0.0  # Don't add noise to the z-axis
                 target_pos = np.random.normal(loc=target_pos, scale=noise_scale)
+                print('add noise')
 
             # Add Gaussian noise to rotation about z-axis.
             if "obj_rot" in self.constants.success_threshold:
@@ -978,6 +979,7 @@ class PushEnv(RobotEnv[PType, CType, SType], abc.ABC):
                     axis=np.array([[0, 0, 1.0]] * num_objects),
                 )
                 target_quat = rotation.quat_mul(target_quat, noise_quat)
+                print('add noise')
 
             self.mujoco_simulation.set_object_pos(target_pos)
             self.mujoco_simulation.set_object_quat(target_quat)

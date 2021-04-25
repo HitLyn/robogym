@@ -76,8 +76,8 @@ class YcbRearrangeEnv(
         self.y_range = np.array([0.35, 1.10])
         # Visual part
         self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
-        self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 6)
-        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device)
+        self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 4)
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_25-14_06/vae_model", 100, map_location=self.device)
         self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
@@ -161,9 +161,12 @@ class YcbRearrangeEnv(
         target_image = cv2.cvtColor(target_image, cv2.COLOR_RGB2HSV)
 
         light_red = (0, 150, 0)
-        bright_red = (20, 255, 255)
-        object_mask = cv2.inRange(object_image, light_red, bright_red) #(64, 64)
-        target_mask = cv2.inRange(target_image, light_red, bright_red)  # (64, 64)
+        dark_red = (20, 255, 255)
+
+        # light_blue = (210, 190, 150)
+        # dark_blue = (265, 255, 255)
+        object_mask = cv2.inRange(object_image, light_red, dark_red) #(64, 64)
+        target_mask = cv2.inRange(target_image, light_red, dark_red)  # (64, 64)
         object_tensor = transforms.ToTensor()(object_mask).unsqueeze(0).to(self.device)
         target_tensor = transforms.ToTensor()(target_mask).unsqueeze(0).to(self.device)
 
@@ -200,7 +203,7 @@ if __name__ == '__main__':
     # in /push/simulation/base.py: set_object_colors() to change target object color
     # from mujoco_py import GlfwContext
     import numpy as np
-    # import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt
     # GlfwContext(offscreen=True)  # Create a window to init GLFW.
     env = make_env()
     for n in range(300):

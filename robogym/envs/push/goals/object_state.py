@@ -453,6 +453,7 @@ class ObjectStateGoal(GoalGenerator):
             max_placement_trial_count=self.mujoco_simulation.max_placement_retry,
             max_placement_trial_count_per_object=self.mujoco_simulation.max_placement_retry_per_object,
             random_state=random_state,
+            target = True,
         )
         # else:
         #     return placement, is_valid
