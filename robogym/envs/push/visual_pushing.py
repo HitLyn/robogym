@@ -141,6 +141,9 @@ class YcbRearrangeEnv(
             obs["observation"] = np.concatenate([object_latent.copy(), obs["gripper_pos"].squeeze().copy()])
             obs["achieved_goal"] = np.concatenate([object_latent.copy(),])
             obs["desired_goal"] = np.concatenate([target_latent.copy()])
+            obs["observation_gt"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal_gt"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal_gt"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
             obs["is_success"] = info["goal_achieved"]
 
         return obs, reward, done, info
@@ -190,6 +193,9 @@ class YcbRearrangeEnv(
             obs["observation"] = np.concatenate([object_latent.copy(), obs["gripper_pos"].squeeze().copy()])
             obs["achieved_goal"] = np.concatenate([object_latent.copy(),])
             obs["desired_goal"] = np.concatenate([target_latent.copy()])
+            obs["observation_gt"] = np.concatenate([obs["obj_pos"].squeeze().copy(), obs["obj_rot"].squeeze().copy(), obs["gripper_pos"].squeeze().copy()])
+            obs["achieved_goal_gt"] = np.concatenate([obs["obj_pos"].squeeze().copy(),])
+            obs["desired_goal_gt"] = np.concatenate([obs["goal_obj_pos"].squeeze().copy()])
             obs["is_success"] = False
 
         return obs
