@@ -76,9 +76,9 @@ class YcbRearrangeEnv(
         self.y_range = np.array([0.35, 1.10])
         # Visual part
         self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
-        self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 6)
-        # self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_25-14_06/vae_model", 100, map_location=self.device) #latent space = 4
-        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device) #latent space = 6
+        self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 4)
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_25-14_06/vae_model", 100, map_location=self.device) #latent space = 4
+        # self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device) #latent space = 6
         self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
         # Call super to recompute `self.parameters.simulation_params.mesh_files`.
