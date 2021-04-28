@@ -54,6 +54,8 @@ class YcbRearrangeEnvConstants(MeshRearrangeEnvConstants):
     mujoco_substeps: int = 40
     mujoco_timestep: float = 0.001
 
+# model that works now:
+# vae:"/homeL/cong/HitLyn/Visual-Pushing/results/vae/4/vae_model" step = 100, latent_space:4, WEIGHT_PATH = "/homeL/cong/HitLyn/Visual-Pushing/log_files/her/04_26-14_39/her_models" step = 46700
 
 class YcbRearrangeEnv(
     MeshRearrangeEnv[
@@ -68,7 +70,7 @@ class YcbRearrangeEnv(
         self._cached_object_names: Dict[str, str] = {}
         # push_candidates = ["077_rubiks_cube",]
         push_candidates = ["r_30_cylinder",]
-        # push_candidates = ["len_8_block", "r_40_cylinder", "len_10_block", "len_6_block", "r_30_cylinder"]
+        # push_candidates = ["len_8_block", "r_40_cylinder", "len_6_block", "r_30_cylinder"]
         # push_candidates = ["035_power_drill", ]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']
@@ -77,7 +79,7 @@ class YcbRearrangeEnv(
         # Visual part
         self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
         self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 4)
-        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_25-14_06/vae_model", 100, map_location=self.device) #latent space = 4
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/4/vae_model", 100, map_location=self.device) #latent space = 4
         # self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device) #latent space = 6
         self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
