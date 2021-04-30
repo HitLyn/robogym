@@ -50,13 +50,14 @@ class YcbRearrangeEnv(
 ):
     MESH_FILES = find_ycb_meshes()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, goal_type = 'pos', *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._cached_object_names: Dict[str, str] = {}
-        push_candidates = ["004_sugar_box", "011_banana", "013_apple", "024_bowl", "030_fork", "032_knife", "037_scissors", "031_spoon", "035_power_drill",
-                           "044_flat_screwdriver", "048_hammer", "072-a_toy_airplane", "077_rubiks_cube", "065-a_cups", "073-a_lego_duplo", "065-f_cups", "033_spatula",
-                           "029_plate", "025_mug", "027_skillet"]
+        # push_candidates = ["004_sugar_box", "011_banana", "013_apple", "024_bowl", "030_fork", "032_knife", "037_scissors", "031_spoon", "035_power_drill",
+        #                    "044_flat_screwdriver", "048_hammer", "072-a_toy_airplane", "077_rubiks_cube", "065-a_cups", "073-a_lego_duplo", "065-f_cups", "033_spatula",
+        #                    "029_plate", "025_mug", "027_skillet"]
+        push_candidates = ["len_8_block", "r_40_cylinder", "len_10_block", "len_6_block", "r_30_cylinder"]
         self.parameters.mesh_names = push_candidates
 
     def _recreate_sim(self) -> None:

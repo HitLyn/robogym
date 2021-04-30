@@ -69,9 +69,12 @@ class YcbRearrangeEnv(
 
         self._cached_object_names: Dict[str, str] = {}
         # push_candidates = ["077_rubiks_cube",]
-        push_candidates = ["r_30_cylinder",]
+        # push_candidates = ["r_30_cylinder",]
         # push_candidates = ["len_8_block", "r_40_cylinder", "len_6_block", "r_30_cylinder"]
-        # push_candidates = ["035_power_drill", ]
+        push_candidates = ["len_8_block", "r_40_cylinder", "len_6_block", "r_30_cylinder", "e_35_25", "e_40_30",
+                           "rec_50_70", "t_60", "t_70", "t_80"]
+        # push_candidates = ["len_8_block", "r_40_cylinder", "len_6_block", "r_30_cylinder", "e_35_25", "e_40_30",
+        #                    "rec_50_70", "rec_60_80", "t_60", "t_70", "t_80", "t_60_80", "t_60_80_100"]
         self.parameters.mesh_names = push_candidates
         self.goal_type = goal_type # from ['pos', 'goal', 'all']
         self.x_range = np.array([0.43, 0.90])
@@ -79,7 +82,7 @@ class YcbRearrangeEnv(
         # Visual part
         self.device = torch.device('cuda:0') if device == None else torch.device('cuda:1')
         self.model = VAE(device = self.device, image_channels = 1, h_dim = 1024, z_dim = 4)
-        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/4/vae_model", 100, map_location=self.device) #latent space = 4
+        self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/4/vae_model", 80, map_location=self.device) #latent space = 4
         # self.model.load("/homeL/cong/HitLyn/Visual-Pushing/results/vae/04_24-13_28/vae_model", 100, map_location=self.device) #latent space = 6
         self.ground_truth = ground_truth
     def _recreate_sim(self) -> None:
