@@ -765,7 +765,7 @@ class RearrangeSimulationInterface(
                 self.mj_sim.model.geom_rgba[target_geom_ids, :] = color
 
             # self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.0
-            self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.6
+            self.mj_sim.model.geom_rgba[target_geom_ids, -1] = 0.7
 
     def set_object_damping(self, damping: Union[float, np.ndarray]):
         if isinstance(damping, float):
