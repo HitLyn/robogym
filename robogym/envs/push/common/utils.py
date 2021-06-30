@@ -697,10 +697,13 @@ def _place_objects_trial(
         return placement + [offset_x, offset_y, 0.39] - table_size + table_pos
 
     def get_object_position(bounding_box, tcp_pos, target = False):
-        x_low = -0.0
-        x_high = 0.18 if target else 0.06
-        y_low = -0.18 if target else -0.06
-        y_high = 0.18 if target else 0.06
+        x_low = -0.25
+        # x_high = 0.30 if target else 0.06
+        # y_low = -0.25 if target else -0.06
+        # y_high = 0.25 if target else 0.06
+        x_high = 0.45
+        y_low = -0.40
+        y_high = 0.40
         x, y = tcp_pos.copy()[:2]
         while np.linalg.norm(np.array([x, y]) - tcp_pos[:2]) < np.linalg.norm(bounding_box[:2]):
             x, y = np.random.uniform([tcp_pos[0] + x_low, tcp_pos[1] + y_low], [tcp_pos[0] + x_high, tcp_pos[1] + y_high])
